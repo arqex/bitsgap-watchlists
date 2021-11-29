@@ -1,0 +1,27 @@
+{
+  "name": "Bitsgap watchlist",
+  "action": {},
+  "manifest_version": 3,
+  "version": "0.1",
+  "description": "Add some more functionality for bitsgap",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.bitsgap.com/*"],
+      "js": ["content-script.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["frontend/*"],
+      "matches": ["https://app.bitsgap.com/*"]
+    }
+  ]
+}
