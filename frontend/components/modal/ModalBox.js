@@ -1,15 +1,16 @@
 import { html } from "../../vendor/preact.js";
+import { Button } from "../button/Button.js";
 
 export function ModalBox(props){
   const {onClose, title, children} = props;
 
   return html`
-    <div class="modal-box">
-      <div class="modal-box-header">
-        <span class="modal-box-title">${title}</span>
+    <div class="box">
+      <div class="header">
+        <span class="title">${title}</span>
         ${ renderCloseButton(onClose) }
       </div>
-      <div class="modal-box-body">
+      <div class="body">
         ${children}
       </div>
     </div>
@@ -21,6 +22,10 @@ function renderCloseButton(onClose){
   if( !onClose ) return;
 
   return html`
-    <a onClick=${ onClose }>x</a>
+    <div class="modal-close">
+      <${Button} type="transparent" onClick=${onClose}>
+        x
+      <//>
+    </div>
   `
 }

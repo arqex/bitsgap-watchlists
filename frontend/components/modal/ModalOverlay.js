@@ -1,21 +1,36 @@
-import { html, createPortal } from "../../vendor/preact-portals.js";
+import { html, createPortal, Component, createRef } from "../../vendor/preact.js";
 
+export class ModalOverlay extends Component {
+  constructor(props) {
+    super(props);
+    this._onClick = this._onClick.bind(this);
+  }
 
-export function ModalOverlay(props) {
-  const {open, children, onClick = () => {}} = props;
+  overlay = createRef()
 
-  if( !open ) return null;
+  render() {
+    const {open, children, onClick = () => {}} = this.props;
+  
+    if( !open ) return null;
+  
+    if( open ){
+      return createPortal(
+        html`
+          <div class="bge_modal"
+            ref=${ this.overlay }
+            onClick=${this._onClick}>
+            ${ children() }
+          </div>
+        `,
+        getModalElement()
+      );
+    }
+  }
 
-  if( open ){
-    return createPortal(
-      html`
-        <div class="modal-overlay"
-          onClick=${onClick}>
-          ${ children() }
-        </div>
-      `,
-      getModalElement()
-    );
+  _onClick(e) {
+    if( e.target === this.overlay.current ){
+      this.props.onClick();
+    }
   }
 }
 

@@ -1,10 +1,8 @@
 import { addPairToWatchlist, createWatchlist } from "../../data/actions.js";
 import { loadWatchlists } from "../../data/loaders.js";
 import { html, Component } from "../../vendor/preact.js";
-import { ScopedStylesDiv } from "../scopedStylesDiv/ScopedStylesDiv.js";
 import { WatchlistBody } from "./WatchlistBody.js";
 import { WatchlistHeader } from "./WatchlistHeader.js";
-import styles from './watchlists.css' assert {type: 'css'};
 
 export class Watchlists extends Component {
   state = {
@@ -18,7 +16,7 @@ export class Watchlists extends Component {
 
     const {selectedWatchlistId} = this.state;
     return html`
-      <${ScopedStylesDiv} styles=${styles} class="trading-tables" style="width: 290px">
+      <div class="trading-tables bge_watchlists" style="width: 290px">
         <${WatchlistHeader}
           watchlists=${watchlists}
           selected=${ watchlists.find( wl => wl.id === selectedWatchlistId ) }

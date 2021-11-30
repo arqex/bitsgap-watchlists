@@ -1,0 +1,19 @@
+.bge_button {
+  background-color: #FFF1;
+  border: 1px solid #FFF2;
+  border-radius: 2px;
+  color: white;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+
+.bge_button:hover {
+  background-color: #FFF3;
+  border: 1px solid #0083ff
+}
+
+.transparent {
+  background-color: transparent;
+  border-color: transparent;
+}

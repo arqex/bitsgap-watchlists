@@ -2,6 +2,7 @@
   let {mount} = await import(chrome.runtime.getURL('frontend/Root.js'));
   mount( createRootNode() );
   loadSocketHijack();
+  loadStyles();
 })();
 
 
@@ -30,4 +31,11 @@ function loadSocketHijack() {
   const script = document.createElement('script');
   script.src = chrome.runtime.getURL('frontend/scripts/hijackSockets.js')
   document.body.appendChild(script);
+}
+
+function loadStyles() {
+  const stylesheet = document.createElement('link');
+  stylesheet.rel = 'stylesheet'
+  stylesheet.href = chrome.runtime.getURL('frontend/bitsgap-extension.css')
+  document.head.appendChild(stylesheet);
 }

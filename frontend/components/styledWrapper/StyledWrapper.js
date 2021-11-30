@@ -1,11 +1,11 @@
 import { Component, html, render } from "../../vendor/preact.js";
 
-export class ScopedStylesDiv extends Component {
+export class StyledWrapper extends Component {
   render() {
-    const {styles, children, ...divProps} = this.props; 
+    const {styles, children, tagName='div', ...divProps} = this.props; 
 
     return html`
-      <div
+      <${tagName}
         ref=${ this._renderShadow }
         ...${divProps} />
     `
