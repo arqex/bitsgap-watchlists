@@ -2,8 +2,10 @@ import { apiClient } from "./apiClient.js";
 import { onListPairsLoaded, onWatchlistsLoaded } from "./reducers.js";
 
 export async function createWatchlist(name) {
-  let watchlists = await apiClient.createWatchlist({name});
+  let {id} = await apiClient.createWatchlist({name});
+  let watchlists = await apiClient.loadWatchlists();
   onWatchlistsLoaded( watchlists );
+  return {id};
 }
 
 export async function deleteWatchlist(id) {

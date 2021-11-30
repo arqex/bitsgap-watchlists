@@ -1,10 +1,10 @@
 import { addPairToWatchlist, createWatchlist } from "../../data/actions.js";
 import { loadWatchlists } from "../../data/loaders.js";
 import { html, Component } from "../../vendor/preact.js";
-import { WatchlistBody } from "./WatchlistBody.js";
+import { WatchlistBody } from "./body/WatchlistBody.js";
 import { WatchlistHeader } from "./WatchlistHeader.js";
 
-export class Watchlists extends Component {
+export class WatchlistPanel extends Component {
   state = {
     selectedWatchlistId: null,
     selectedPair: null
@@ -14,17 +14,17 @@ export class Watchlists extends Component {
     const {isLoading, watchlists} = loadWatchlists();
     if( isLoading ) return 'Loading...';
 
-    const {selectedWatchlistId} = this.state;
+    const selected = this.getSelected(watchlists);
     return html`
       <div class="trading-tables bge_watchlists" style="width: 290px">
         <${WatchlistHeader}
           watchlists=${watchlists}
-          selected=${ watchlists.find( wl => wl.id === selectedWatchlistId ) }
+          selected=${ selected }
           onCreate=${ this._onCreateWatchlist }
           onSelected=${ this._onSelectWatchlist }
           onAddPair=${ this._onAddPair } />
         <${WatchlistBody}
-          selectedWatchlistId=${selectedWatchlistId}
+          selectedWatchlistId=${selected?.id}
           onCreateWatchlist=${ this._onCreateWatchlist }
           onSelectedPair=${ this._onSelectPair }
           onDeletePair=${ this._onDeletePair } />
@@ -32,8 +32,14 @@ export class Watchlists extends Component {
     `
   }
 
+  getSelected( watchlists ) {
+    if( watchlists.length === 0 ) return;
+    const {selectedWatchlistId} = this.state;
+    return watchlists.find( wl => wl.id === selectedWatchlistId ) || watchlists[0];
+  }
+
   _onCreateWatchlist = async (name) => {
-    let id = await createWatchlist(name);
+    let {id} = await createWatchlist(name);
     this._onSelectWatchlist(id);
   }
 

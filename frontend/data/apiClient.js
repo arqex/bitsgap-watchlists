@@ -1,7 +1,7 @@
 export const apiClient = {
   async loadWatchlists() {
-    let results = await getValues(['watchlists']);
-    return results.length ? results[0] : []; // empty lists
+    let results = (await getValues(['watchlists'])).watchlists;
+    return results?.length ? results : []; // empty lists
   },
 
   async createWatchlist(watchlist) {
@@ -17,7 +17,7 @@ export const apiClient = {
     ];
 
     await setValues({watchlists});
-    return watchlists;
+    return {id: toStore.id};
   },
 
   async deleteWatchlist(id) {
@@ -31,8 +31,9 @@ export const apiClient = {
   },
 
   async loadWatchlistPairs(id) {
-    let results = await getValues([`wl:${id}`]);
-    return results.length ? results[0] : [];
+    let key = `wl:${id}`;
+    let results = (await getValues([key]))[key];
+    return results?.length ? results : [];
   },
 
   async addPairToWatchlist( watchlistId, pair ) {

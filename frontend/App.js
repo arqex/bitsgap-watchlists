@@ -1,8 +1,8 @@
-import { Watchlists } from './components/watchlists/Watchlists.js';
+import { WatchlistPanel } from './components/watchlistPanel/WatchlistPanel.js';
 import {html} from './vendor/preact.js';
 
 export function App() {
   return html`
-    <${Watchlists} />
+    <${WatchlistPanel} />
   `
 }
