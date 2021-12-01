@@ -25,6 +25,10 @@ export const socket = {
     }
   },
   send( msg ){
-    window.postMessage({remoteSocket: true, msg});
+    window.postMessage({
+      remoteSocket: true,
+      msg,
+      origin: 'plugin'
+    });
   }
 }

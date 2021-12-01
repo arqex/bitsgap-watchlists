@@ -1,0 +1,29 @@
+.pairSelector {
+  contain: layout inline-size style;
+  height: 80vh;
+  width: 90ch;
+  max-width: 680px;
+}
+
+@container (min-width: 0px) {
+  .inputWrapper {
+    position: relative;
+  }
+  .inputWrapper i {
+    color: #99a;
+    position: absolute;
+    top: 12px;
+    left: 10px;
+  }
+
+  input {
+    display: block;
+    background-color: #1d1a28;
+    border: 2px solid #0001;
+    padding: 10px 10px 10px 32px;
+    color: #fff;
+    width: 100%;
+  }
+}
+
+

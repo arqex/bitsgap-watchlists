@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
 
 @container (min-width: 0px) {
@@ -29,7 +30,7 @@
   
   .modal-close {
     position: absolute;
-    top: 4px; right: 4px;
+    top: 6px; right: 4px;
   }
   
   .confirmation-modal-body {

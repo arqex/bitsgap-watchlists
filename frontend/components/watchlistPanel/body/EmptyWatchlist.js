@@ -1,5 +1,6 @@
 import { html, Component } from "../../../vendor/preact.js";
 import { Button } from "../../button/Button.js";
+import { PairSelectorModal } from "../../pairSelector/PairSelectorModal.js";
 
 export class EmptyWatchlist extends Component {
   state = {
@@ -14,7 +15,18 @@ export class EmptyWatchlist extends Component {
         <${Button} onClick=${ this._openModal }>
           Add a pair
         <//>
-      </div>
+        <${PairSelectorModal}
+          open=${ this.state.modalOpen }
+          onClose=${ this._closeModal } />
+      </div> 
     `
+  }
+
+  _openModal = () => {
+    this.setState({modalOpen: true});
+  }
+
+  _closeModal = () => {
+    this.setState({modalOpen: false});
   }
 }

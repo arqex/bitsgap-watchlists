@@ -2,7 +2,9 @@
   let {mount} = await import(chrome.runtime.getURL('frontend/Root.js'));
   mount( createRootNode() );
   loadSocketHijack();
-  loadStyles();
+  loadStyles(chrome.runtime.getURL('frontend/bitsgap-extension.css'));
+  loadStyles('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css');
+  loadStyles('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css');
 })();
 
 
@@ -33,9 +35,9 @@ function loadSocketHijack() {
   document.body.appendChild(script);
 }
 
-function loadStyles() {
+function loadStyles(url) {
   const stylesheet = document.createElement('link');
   stylesheet.rel = 'stylesheet'
-  stylesheet.href = chrome.runtime.getURL('frontend/bitsgap-extension.css')
+  stylesheet.href = url;
   document.head.appendChild(stylesheet);
 }

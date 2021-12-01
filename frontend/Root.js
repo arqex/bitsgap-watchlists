@@ -1,4 +1,5 @@
 import { App } from './App.js';
+import { socketFeed } from './data/socketFeed.js';
 import { addChangeListener } from './data/storeChangeEmitter.js';
 import {html, render, Component} from './vendor/preact.js';
 
@@ -40,10 +41,10 @@ class Root extends Component {
   checkDataInitialization( currentRoute ){
     if( currentRoute !== this.previousRoute ){
       if( isTradingRoute(currentRoute) ){
-        // initialize data listeners here
+        socketFeed.startListening();
       }
       else {
-        // stop listening to data here
+        socketFeed.stopListening();
       }
     }
   }

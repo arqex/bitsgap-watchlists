@@ -24,7 +24,7 @@ function renderCloseButton(onClose){
   return html`
     <div class="modal-close">
       <${Button} type="transparent" onClick=${onClose}>
-        x
+        <i class="fas fa-times"></i>
       <//>
     </div>
   `

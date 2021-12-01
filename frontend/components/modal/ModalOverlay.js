@@ -9,7 +9,7 @@ export class ModalOverlay extends Component {
   overlay = createRef()
 
   render() {
-    const {open, children, onClick = () => {}} = this.props;
+    const {open, children} = this.props;
   
     if( !open ) return null;
   
@@ -28,7 +28,7 @@ export class ModalOverlay extends Component {
   }
 
   _onClick(e) {
-    if( e.target === this.overlay.current ){
+    if( e.target === this.overlay.current && this.props.onClick ){
       this.props.onClick();
     }
   }

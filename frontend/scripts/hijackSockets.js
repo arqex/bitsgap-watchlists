@@ -20,7 +20,7 @@
 
 
     window.addEventListener('message', ({data}) => {
-      if( socket && data?.remoteSocket ){
+      if( socket && data?.remoteSocket && data.origin === 'plugin' ){
         receiveMessageFromPlugin(socket, data.msg);
       }
     });
@@ -30,7 +30,8 @@
     if( typeof msg.data === 'string' ){
       let ourMsg = {
         remoteSocket: true, // this is the flag in the message that says it's ours
-        msg: JSON.parse(msg.data)
+        msg: JSON.parse(msg.data),
+        origin: 'site'
       }
       window.postMessage(ourMsg);
     }
