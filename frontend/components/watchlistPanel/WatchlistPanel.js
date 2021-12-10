@@ -31,7 +31,7 @@ export class WatchlistPanel extends Component {
           onCreateWatchlist=${ this._onCreateWatchlist }
           onSelectedPair=${ this._onSelectPair }
           onDeletePair=${ this._onDeletePair }
-          onAddPair=${ this._openModal } />
+          onAddPair=${ this._openModal } />
         <${PairSelectorModal}
           open=${ this.state.modalOpen }
           onClose=${ this._closeModal }

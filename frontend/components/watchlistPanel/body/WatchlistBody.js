@@ -1,5 +1,5 @@
 import { getPairSelector } from "../../../scripts/pairSelector.js";
-import { addPairToWatchlist, deleteWatchlist } from "../../../data/actions.js";
+import { deleteWatchlist } from "../../../data/actions.js";
 import { html, Component } from "../../../vendor/preact.js";
 import { NoWatchlistsBody } from "./NoWatchlistsBody.js";
 import { PairList } from "./PairList.js";
@@ -29,6 +29,7 @@ export class WatchlistBody extends Component {
   }
 
   renderWatchlist( watchlistId ) {
+    console.log(typeof this.props.onAddPair);
     return html`
       <${PairList}
         onAddPair=${this.props.onAddPair}

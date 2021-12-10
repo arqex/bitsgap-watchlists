@@ -18,6 +18,7 @@ export class PairSelectorItem extends Component {
     `
   }
   _onSelect = () => {
+    console.log(typeof this.props.onSelected);
     this.props.onSelected(this.props.item);
   }
 
