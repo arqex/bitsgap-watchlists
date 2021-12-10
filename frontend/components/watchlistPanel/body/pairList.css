@@ -1,0 +1,34 @@
+.pairList {
+  contain: layout inline-size style;
+}
+
+
+@container (min-width: 0px) {
+  .pairItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid #334;
+    cursor: pointer;
+    color: #ddd;
+  }
+
+  .pairItem:hover {
+    background: #eef2;
+  }
+
+  .pairItemSymbol {
+    display: flex
+  }
+
+  .pairItemName {
+    font-size: .9em;
+    line-height: 1.4em;
+  }
+
+  .pairItemExchange {
+    display: inline-block;
+    margin-right: 4px;
+  }
+}

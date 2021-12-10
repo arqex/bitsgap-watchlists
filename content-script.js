@@ -1,6 +1,7 @@
 (async () => {
-  let {mount} = await import(chrome.runtime.getURL('frontend/Root.js'));
-  mount( createRootNode() );
+  // let {mount} = await import(chrome.runtime.getURL('frontend/Root.js'));
+  // mount( createRootNode() );
+  loadUI();
   loadSocketHijack();
   loadStyles(chrome.runtime.getURL('frontend/bitsgap-extension.css'));
   loadStyles('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css');
@@ -26,6 +27,13 @@ function setStyles( node, styles ){
   for( let key in styles ){
     node.style[key] = styles[key];
   }
+}
+
+function loadUI() {
+  const script = document.createElement('script');
+  script.src = chrome.runtime.getURL('frontend/scripts/mount.js');
+  script.type = 'module';
+  document.body.appendChild(script);
 }
 
 // This will load a script that will listen to the bitsgap websocket

@@ -1,14 +1,19 @@
 .pairSelector {
   contain: layout inline-size style;
+  container-name: pairSelector;
   height: 80vh;
   width: 90ch;
   max-width: 680px;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
 }
 
-@container (min-width: 0px) {
+@container pairSelector (min-width: 0px) {
   .inputWrapper {
     position: relative;
   }
+
   .inputWrapper i {
     color: #99a;
     position: absolute;
@@ -23,6 +28,34 @@
     padding: 10px 10px 10px 32px;
     color: #fff;
     width: 100%;
+  }
+
+  .resultsWrapper {
+    flex-grow: 1;
+    overflow: auto;
+  }
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #334;
+    cursor: pointer;
+  }
+
+  .item:hover {
+    background: #eef2;
+  }
+
+  .itemExchange {
+    color: #ddd;
+    display: flex;
+    align-items: center;
+  }
+
+  .itemExchangeImage {
+    display: inline-block;
+    margin-left: 4px;
   }
 }
 

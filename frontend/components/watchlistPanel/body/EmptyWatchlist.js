@@ -1,3 +1,4 @@
+import { addPairToWatchlist } from "../../../data/actions.js";
 import { html, Component } from "../../../vendor/preact.js";
 import { Button } from "../../button/Button.js";
 import { PairSelectorModal } from "../../pairSelector/PairSelectorModal.js";
@@ -17,7 +18,8 @@ export class EmptyWatchlist extends Component {
         <//>
         <${PairSelectorModal}
           open=${ this.state.modalOpen }
-          onClose=${ this._closeModal } />
+          onClose=${ this._closeModal }
+          onSelected=${ this.props.onAddPair } />
       </div> 
     `
   }
@@ -28,5 +30,9 @@ export class EmptyWatchlist extends Component {
 
   _closeModal = () => {
     this.setState({modalOpen: false});
+  }
+
+  _onPairAdded = pairData => {
+    addPairToWatchlist()
   }
 }

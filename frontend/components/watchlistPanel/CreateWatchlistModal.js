@@ -48,6 +48,7 @@ export class CreateWatchlistModal extends Component {
       this.setState({
         error: 'Please type a name for the watch list'
       });
+      return;
     }
     
     this.props.onConfirm(name);

@@ -1,8 +1,9 @@
 .bge_watchlists {
   contain: layout inline-size style;
+  container-name: watchlists;
 }
 
-@container (min-width: 0px) {
+@container watchlists (min-width: 0px) {
   .no-watchlists-body {
     padding: 20px;
     text-align: center;
@@ -12,5 +13,13 @@
   .no-watchlist-message {
     color: white;
     margin-bottom: 20px;
+  }
+
+  .watchlist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+    width: 100%;
   }
 }

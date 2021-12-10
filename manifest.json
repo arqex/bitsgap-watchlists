@@ -15,13 +15,13 @@
   "content_scripts": [
     {
       "matches": ["https://app.bitsgap.com/*"],
-      "js": ["content-script.js"]
+      "js": ["content-script.js", "backend/database.js"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["frontend/*"],
-      "matches": ["https://app.bitsgap.com/*"]
+      "matches": ["https://app.bitsgap.com/*"],
+      "resources": ["frontend/*"]
     }
   ]
 }

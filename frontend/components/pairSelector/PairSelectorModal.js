@@ -5,14 +5,14 @@ import { PairSelector } from "./PairSelector.js";
 
 export class PairSelectorModal extends Component {
   render() {
-    const {open, onClose, mode} = this.props;
+    const {open, onClose, mode, onSelected} = this.props;
     let title = mode === 'add' ? 'Add pairs' : 'Pair search';
 
     return html`
       <${ModalOverlay} open=${open} onClick=${onClose}>
         ${ () => html`
           <${ModalBox} onClose=${onClose} title=${title}>
-            <${PairSelector} />
+            <${PairSelector} onSelected=${onSelected} />
           <//>
         `}
       <//>

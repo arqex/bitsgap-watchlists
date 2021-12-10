@@ -1,6 +1,7 @@
 import { loadWatchlistPairs } from "../../../data/loaders.js";
 import { Component, html } from "../../../vendor/preact.js";
 import { EmptyWatchlist } from "./EmptyWatchlist.js";
+import { PairItem } from "./PairItem.js";
 
 export class PairList extends Component {
   render() {
@@ -11,7 +12,7 @@ export class PairList extends Component {
     if( !pairs.length ) return this.renderEmpty();
 
     return html`
-      <div class="watchlists-body">
+      <div class="watchlists-body pairList">
         ${ pairs.map( this._renderPair ) } 
       </div>
     `
@@ -19,14 +20,16 @@ export class PairList extends Component {
 
   _renderPair = pair => {
     return html`
-      <div key=${pair.symbol}>
-        ${pair.exchange}: ${pair.symbol}
-      </div>
+      <${PairItem}
+        key=${`${pair.exchange}${pair.symbol}`}
+        item=${pair}
+        onRemove=${this.props.onRemovePair}
+        onSelected=${this.props.onSelectPair} />
     `
   }
 
   renderLoading() {
-    return html`<div>Loading...</div>`;
+    return html`<div className="pairList">Loading...</div>`;
   }
 
   renderEmpty() {

@@ -1,72 +1,28 @@
 export const apiClient = {
   async loadWatchlists() {
-    let results = (await getValues(['watchlists'])).watchlists;
+    let results = await sendToBackend('getWatchlists', {});
     return results?.length ? results : []; // empty lists
   },
 
   async createWatchlist(watchlist) {
-    let toStore = {
-      ...watchlist,
-      id: createId(),
-      createdAt: Date.now()
-    }
-
-    let watchlists = [
-      ... (await this.loadWatchlists()),
-      toStore
-    ];
-
-    await setValues({watchlists});
-    return {id: toStore.id};
+    return await sendToBackend('createWatchlist', {watchlist});
   },
 
   async deleteWatchlist(id) {
-    let currentLists = await this.loadWatchlists();
-    let watchlists = currentLists.filter( l => l.id !== id );
-
-    await setValues({watchlists});
-    await deleteValues([`wl:${id}`]);
-
-    return watchlists;
+    return await sendToBackend('deleteWatchlist', {id});
   },
 
   async loadWatchlistPairs(id) {
-    let key = `wl:${id}`;
-    let results = (await getValues([key]))[key];
+    let results = await sendToBackend('getWatchlistPairs', {id});
     return results?.length ? results : [];
   },
 
   async addPairToWatchlist( watchlistId, pair ) {
-    let pairs = await this.loadWatchlistPairs(watchlistId);
-
-    // check if the pair is already there
-    for( let p in pairs ){
-      if( areEquals( p, pair )){
-        // It is there, return the current list
-        return pairs;
-      }
-    }
-
-    let updatedList = [
-      ...pairs,
-      pair
-    ]
-
-    await setValues({
-      [`wl:${watchlistId}`]: updatedList
-    });
-    return updatedList;
+    return await sendToBackend('addPairToWatchlist', {watchlistId, pair} );
   },
 
   async removePairFromWatchlist( watchlistId, pair ) {
-    let pairs = await this.loadWatchlistPairs( watchlistId );
-    let updatedPairs = pairs.filter( p => !areEquals(p, pair) );
-
-    await setValues({
-      [`wl:${pair}`]: updatedPairs
-    });
-
-    return updatedPairs;
+    return await sendToBackend('removePairFromWatchlist', {watchlistId, pair} );
   }
 }
 
@@ -77,22 +33,28 @@ function createId() {
   return (Math.random()*10000000).toString();
 }
 
-
-// Let's promisify the storage API
-function getValues( keys ){
-  return new Promise( (resolve) => {
-    chrome.storage.local.get( keys, resolve );
+// Communicate with the backend by messages
+const backendPromises = {};
+function sendToBackend(action, args) {
+  const id = createId();
+  return new Promise( resolve => {
+    backendPromises[id] = resolve;
+    window.postMessage({
+      id,
+      origin: 'bge:frontend',
+      action,
+      args
+    });
   })
 }
 
-function setValues( map ){
-  return new Promise( (resolve) => {
-    chrome.storage.local.set( map, resolve );
-  })
-}
-
-function deleteValues( keys ){
-  return new Promise( (resolve) => {
-    chrome.storage.local.remove( keys, resolve );
-  })
-}
+window.addEventListener('message', msg => {
+  const data = msg?.data;
+  if( data?.origin === 'bge:backend' ){
+    let resolve = backendPromises[data.id];
+    if( resolve ){
+      delete backendPromises[data.id];
+      return resolve(data.result );
+    }
+  }
+});

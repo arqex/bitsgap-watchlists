@@ -17,7 +17,7 @@ export class InputGroup extends Component {
           ref=${this.input}
           name=${name}
           value=${value}
-          onChange=${onChange}
+          onInput=${onChange}
           onKeyPress=${onKeyPress}  />
         ${ this.renderError() }
       </div>

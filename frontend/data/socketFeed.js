@@ -58,34 +58,34 @@ function classifyMessages( message ){
   }
 }
 
-function refreshMarketPairs(socket) {
-  const skey = {"proc":"app.markets.balance","trade":"real"};
-  subscribe(socket, skey);
-  unsubscribe(socket, skey);
+export function refreshMarketPairs() {
+  const skey = {"proc":"v_conf_pairs_to","trade":"real"};
+  subscribe( skey);
+  setTimeout( () => unsubscribe( skey ), 100);
 }
 
-function refreshBalances(socket) {
+export function refreshBalances() {
   const skey = {"proc":"app.markets.balance","trade":"real"};
-  userSubscribe(socket, skey);
-  userUnsubscribe(socket, skey);
+  userSubscribe( skey);
+  setTimeout( () => userUnsubscribe( skey), 100);
 }
 
-function refreshMarketOrders(socket, market) {
+export function refreshMarketOrders( market ) {
   const skey = {"proc":"app.openorders","market": market};
-  userSubscribe(socket, skey);
-  userUnsubscribe(socket, skey);
+  userSubscribe( skey);
+  setTimeout( () => userUnsubscribe( skey), 100);
 }
 
 
-function subscribe( socket, skey ) {
+function subscribe( skey ) {
   socket.send({"type":"push_subs","subs":"1","skey": skey});
 }
-function userSubscribe( socket, skey ) {
+function userSubscribe( skey ) {
   socket.send({"type":"users_push_subs","subs":"1","skey": skey});
 }
-function unsubscribe(socket, skey) {
+function unsubscribe(skey) {
   socket.send({"type":"push_subs","subs":"00","skey": skey});
 }
-function userUnsubscribe(socket, skey) {
+function userUnsubscribe(skey) {
   socket.send({"type":"users_push_subs","subs":"00","skey": skey});
 }
