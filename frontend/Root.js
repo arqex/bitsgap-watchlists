@@ -1,6 +1,7 @@
 import { App } from './App.js';
 import { socketFeed } from './data/socketFeed.js';
-import { addChangeListener } from './data/storeChangeEmitter.js';
+import { addChangeListener as onStoreChange } from './data/storeChangeEmitter.js';
+import { addChangeListener as onFrontendStoreChange } from './data/frontendStore.js';
 import {html, render, Component} from './vendor/preact.js';
 
 class Root extends Component {
@@ -20,7 +21,8 @@ class Root extends Component {
 
   componentDidMount(){
     this.listenToNavigation();
-    addChangeListener( () => this.forceUpdate() );
+    onStoreChange( () => this.forceUpdate() );
+    onFrontendStoreChange( () => this.forceUpdate() );
     this.checkDataInitialization( this.state.currentRoute );
   }
 

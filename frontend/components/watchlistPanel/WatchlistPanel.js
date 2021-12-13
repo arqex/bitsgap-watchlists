@@ -1,4 +1,5 @@
 import { addPairToWatchlist, createWatchlist, deleteWatchlist, removePairFromWatchlist } from "../../data/actions.js";
+import { getLastWatchlistId, saveLastWatchlistId } from "../../data/frontendStore.js";
 import { loadWatchlists } from "../../data/loaders.js";
 import { html, Component } from "../../vendor/preact.js";
 import { PairSelectorModal } from "../pairSelector/PairSelectorModal.js";
@@ -7,7 +8,6 @@ import { WatchlistHeader } from "./header/WatchlistHeader.js";
 
 export class WatchlistPanel extends Component {
   state = {
-    selectedWatchlistId: null,
     selectedPair: null,
     modalOpen: false,
   }
@@ -42,8 +42,14 @@ export class WatchlistPanel extends Component {
 
   getSelected( watchlists ) {
     if( watchlists.length === 0 ) return;
-    const {selectedWatchlistId} = this.state;
+    const selectedWatchlistId = getLastWatchlistId();
     return watchlists.find( wl => wl.id === selectedWatchlistId ) || watchlists[0];
+  }
+
+  getSelectedWatchlistId() {
+    const {watchlists} = loadWatchlists();
+    let selected = this.getSelected(watchlists);
+    return selected?.id;
   }
 
   _onCreateWatchlist = async (name) => {
@@ -52,7 +58,7 @@ export class WatchlistPanel extends Component {
   }
 
   _onSelectWatchlist = (selectedWatchlistId) => {
-    this.setState({selectedWatchlistId});
+    saveLastWatchlistId(selectedWatchlistId);
   }
 
   _onRemoveList = async (watchlistId) => {
@@ -60,7 +66,7 @@ export class WatchlistPanel extends Component {
   }
 
   _onAddPair = async (pair) => {
-    await addPairToWatchlist(this.state.selectedWatchlistId, pair);
+    await addPairToWatchlist(this.getSelectedWatchlistId(), pair);
     this._onSelectPair(pair);
   }
 
@@ -69,7 +75,7 @@ export class WatchlistPanel extends Component {
   }
 
   _onDeletePair = (pair) => {
-    removePairFromWatchlist(this.state.selectedWatchlistId, pair);
+    removePairFromWatchlist(this.getSelectedWatchlistId(), pair);
   }
 
   _openModal = () => {
@@ -78,19 +84,5 @@ export class WatchlistPanel extends Component {
 
   _closeModal = () => {
     this.setState({modalOpen: false});
-  }
-
-  componentDidUpdate() {
-    this.checkSelectedMarket();
-  }
-
-  checkSelectedMarket() {
-    if( !this.state.selectedWatchlistId ){
-      const {watchlists} = loadWatchlists();
-      if( watchlists?.length > 0 ) {
-        const selected = this.getSelected( watchlists );
-        this.setState({selectedWatchlistId: selected?.id});
-      }
-    }
   }
 }
