@@ -10,6 +10,7 @@ export class WatchlistPanel extends Component {
   state = {
     selectedPair: null,
     modalOpen: false,
+    modalMode: 'add'
   }
 
   render() {
@@ -23,17 +24,18 @@ export class WatchlistPanel extends Component {
           watchlists=${watchlists}
           selected=${ selected }
           onCreate=${ this._onCreateWatchlist }
-          onSelected=${ this._onSelectWatchlist }
-          onAddPair=${ this._openModal }
+          onSelected=${ this._onSwitchWatchlist }
+          onAddPair=${ this._openAddModal }
           onRemoveList=${ this._onRemoveList } />
         <${WatchlistBody}
           selectedWatchlistId=${selected?.id}
           onCreateWatchlist=${ this._onCreateWatchlist }
-          onSelectedPair=${ this._onSelectPair }
+          onSelectedPair=${ this._onSwitchPair }
           onDeletePair=${ this._onDeletePair }
-          onAddPair=${ this._openModal } />
+          onAddPair=${ this._openAddModal } />
         <${PairSelectorModal}
           open=${ this.state.modalOpen }
+          mode=${ this.state.modalMode }
           onClose=${ this._closeModal }
           onSelected=${ this._onAddPair } />
       </div>
@@ -54,10 +56,10 @@ export class WatchlistPanel extends Component {
 
   _onCreateWatchlist = async (name) => {
     let {id} = await createWatchlist(name);
-    this._onSelectWatchlist(id);
+    this._onSwitchWatchlist(id);
   }
 
-  _onSelectWatchlist = (selectedWatchlistId) => {
+  _onSwitchWatchlist = (selectedWatchlistId) => {
     saveLastWatchlistId(selectedWatchlistId);
   }
 
@@ -65,12 +67,22 @@ export class WatchlistPanel extends Component {
     return await deleteWatchlist(watchlistId);
   }
 
-  _onAddPair = async (pair) => {
-    await addPairToWatchlist(this.getSelectedWatchlistId(), pair);
-    this._onSelectPair(pair);
+  _onSelectPair = async (pair) => {
+    if( this.state.modalMode === 'add' ){
+      this._onAddPair(pair);
+    }
+    else {
+      this._closeModal();
+      this._onSwitchPair(pair);
+    }
   }
 
-  _onSelectPair = (selectedPair) => {
+  _onAddPair = async (pair) => {
+    await addPairToWatchlist(this.getSelectedWatchlistId(), pair);
+    this._onSwitchPair(pair);
+  }
+
+  _onSwitchPair = (selectedPair) => {
     this.setState(selectedPair);
   }
 
@@ -78,8 +90,18 @@ export class WatchlistPanel extends Component {
     removePairFromWatchlist(this.getSelectedWatchlistId(), pair);
   }
 
-  _openModal = () => {
-    this.setState({modalOpen: true});
+  _openAddModal = () => {
+    this.setState({
+      modalOpen: true,
+      modalMode: 'add'
+    });
+  }
+
+  _openSearchModal = () => {
+    this.setState({
+      modalOpen: true,
+      modalMode: 'search'
+    });
   }
 
   _closeModal = () => {
@@ -103,6 +125,7 @@ export class WatchlistPanel extends Component {
   }
 
   openQuickSearch() {
+    this._openSearchModal();
     console.log('Opening quick search');
   }
 }

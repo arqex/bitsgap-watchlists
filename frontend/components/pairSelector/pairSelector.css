@@ -39,6 +39,7 @@
     display: flex;
     justify-content: space-between;
     padding: 8px 10px;
+    border: 1px solid transparent;
     border-bottom: 1px solid #334;
     cursor: pointer;
   }
@@ -56,6 +57,10 @@
   .itemExchangeImage {
     display: inline-block;
     margin-left: 4px;
+  }
+
+  .highlighted {
+    border: 1px solid #0083ff;
   }
 }
 

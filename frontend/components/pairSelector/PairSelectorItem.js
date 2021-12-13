@@ -3,11 +3,16 @@ import { ExchangeImage } from "../exchangeImage/ExchangeImage.js";
 
 export class PairSelectorItem extends Component {
   render() {
-    const {item} = this.props;
+    const {item, isHighlighted} = this.props;
+
+    const classes = mergeClasses(
+      'item',
+      isHighlighted && 'highlighted'
+    );
 
     return html`
-      <div class="item" onClick=${this._onSelect}>
-        <div class="itemSymbol">${item.tag}</div>
+      <div class=${classes} onClick=${this._onSelect}>
+        <div class="itemSymbol">${item.symbol}</div>
         <div class="itemExchange">
           <span class="itemExchangeName">${item.exchange}</span>
           <span class="itemExchangeImage">
@@ -25,4 +30,9 @@ export class PairSelectorItem extends Component {
   _onRemove = () => {
     this.props.onRemoved(this.props.item);
   }
+}
+
+
+function mergeClasses(...classes) {
+  return classes.filter(Boolean).join(' ');
 }

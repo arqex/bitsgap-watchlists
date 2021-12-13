@@ -1,13 +1,16 @@
 import { refreshMarketPairs, socketFeed } from "../../data/socketFeed.js";
-import { Component, html } from "../../vendor/preact.js";
+import { Component, html, createRef } from "../../vendor/preact.js";
 import Fuse from "../../vendor/fuse.js";
 import { PairSelectorItem } from "./PairSelectorItem.js";
 
 export class PairSelector extends Component {
   state = {
     fuse: this.createIndex(),
-    query: ''
+    query: '',
+    highlightedIndex: 0
   }
+
+  input = createRef()
 
   render() {
     const {fuse, query} = this.state;
@@ -16,38 +19,48 @@ export class PairSelector extends Component {
       return html`<div class="pairSelector">Loading...</div>`;
     }
 
-    let results = query ?
-      fuse.search(query).slice(0,20) :
-      defaultResults
-    ;
-
     return html`
       <div class="pairSelector">
         <div class="inputWrapper">
           <i class="fas fa-search"></i>
           <input
+            ref=${this.input}
             placeholder="Search"
             value=${query}
-            onInput=${this._onSearchChange} />
+            onInput=${this._onSearchChange}
+            onKeyDown=${this._onKeyDown} />
         </div>
         <div class="resultsWrapper">
           <div class="results">
-            ${ results.map( this._renderItem ) }
+            ${ this.getResults().map( this._renderItem ) }
           </div>
         </div>
       </div>
     `;
   }
 
-  _onSearchChange = e => {
-    this.setState({query: e.target.value.toUpperCase() });
+  getResults() {
+    const {query} = this.state;
+
+    return query ?
+      this.state.fuse.search( query ).slice(0,20) :
+      defaultResults
+    ;
   }
 
-  _renderItem = ({item}) => {
+  _onSearchChange = e => {
+    this.setState({
+      query: e.target.value.toUpperCase(),
+      highlightedIndex: 0
+    });
+  }
+
+  _renderItem = ({item}, i) => {
     return html`
       <${PairSelectorItem}
         key=${item.exchange + item.tag}
         item=${item}
+        isHighlighted=${this.state.highlightedIndex === i}
         mode=${this.props.mode}
         onSelected=${this.props.onSelected}
         onRemoved=${this._onPairRemoved} />
@@ -66,8 +79,9 @@ export class PairSelector extends Component {
     if( !this.fuse ){
       refreshMarketPairs();
     }
-
     socketFeed.subscribe('allPairs', this._onPairsUpdated );
+
+    this.input?.current?.focus();
   }
 
   componentWillUnmount() {
@@ -87,23 +101,49 @@ export class PairSelector extends Component {
     let entries = [];
     for( let exchange in pairsByExchange ){
       pairsByExchange[exchange].forEach( symbol => {
+        let tag = symbol.replace('_', '').replace(/\(.*?\)/, '');
         entries.push({
           exchange,
           symbol,
-          tag: symbol.replace('_', '').replace(/\(.*?\)/, '')
+          tag,
+          queryStr: `${tag} ${symbol.replace('_', ' ')} ${exchange}`
         })
       })
     }
 
     const options = {
       keys: [
-        {name: 'exchange', weight: 1},
-        {name: 'tag', weight: 2},
+        {name: 'queryStr'}
       ],
-      threshold: 0.2
+      threshold: 0.6
     }
     
     return new Fuse(entries, options);
+  }
+
+  _onKeyDown = e => {
+    console.log(e);
+    if( e.key === 'ArrowDown' ){
+      e.preventDefault();
+      let results = this.getResults();
+      let current = this.state.highlightedIndex;
+      this.setState({
+        highlightedIndex: current === results.length - 1 ? 0 : current + 1
+      });
+    }
+    else if( e.key === 'ArrowUp' ){
+      e.preventDefault();
+      let results = this.getResults();
+      let current = this.state.highlightedIndex;
+      this.setState({
+        highlightedIndex: current === 0 ? results.length - 1 : current - 1
+      });
+    }
+    else if( e.key === 'Enter' ){
+      e.preventDefault();
+      let results = this.getResults();
+      this.props.onSelected( results[this.highlightedIndex] );
+    }
   }
 }
 
