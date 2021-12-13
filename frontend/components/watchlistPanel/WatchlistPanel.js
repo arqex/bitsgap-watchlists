@@ -85,4 +85,24 @@ export class WatchlistPanel extends Component {
   _closeModal = () => {
     this.setState({modalOpen: false});
   }
+
+  componentDidMount(){
+    document.body.addEventListener('keydown', this._onTyping );
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('keydown', this._onTyping );
+  }
+  
+  _onTyping = (e) => {
+    if( e.target.tagName === 'INPUT' || this.state.modalOpen ) return;
+
+    if( e.key.match(/^[a-zA-Z0-9]$/) ){
+      this.openQuickSearch();
+    }
+  }
+
+  openQuickSearch() {
+    console.log('Opening quick search');
+  }
 }
