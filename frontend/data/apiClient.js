@@ -9,11 +9,11 @@ export const apiClient = {
   },
 
   async deleteWatchlist(id) {
-    return await sendToBackend('deleteWatchlist', {id});
+    return await sendToBackend('deleteWatchlist', id);
   },
 
   async loadWatchlistPairs(id) {
-    let results = await sendToBackend('getWatchlistPairs', {id});
+    let results = await sendToBackend('getWatchlistPairs', id);
     return results?.length ? results : [];
   },
 

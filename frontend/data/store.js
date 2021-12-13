@@ -1,4 +1,4 @@
 export const store = {
   // watchlists: [...]
-  listPairs: { /* id: [...{symbol,exchange}] */ }
+  listPairs: { /* id: [...{pair,exchange}] */ }
 }

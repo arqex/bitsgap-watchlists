@@ -48,11 +48,11 @@ export class WatchlistSelector extends Component {
   }
 
   _renderListItem = watchlist => {
-    const { onSelect, onRemove } = this.props;
+    const { onRemove } = this.props;
     return html`
       <${DropdownItem }
         id=${watchlist.id}
-        onClick=${ onSelect }
+        onClick=${ this._onSelect }
         onRemove=${ onRemove }>
         ${watchlist.name}
       <//>
@@ -81,5 +81,10 @@ export class WatchlistSelector extends Component {
   _onCreate = name => {
     this.props.onCreate(name);
     this._closeCreateModal();
+  }
+
+  _onSelect = id => {
+    this.setState({open: false});
+    this.props.onSelect(id);
   }
 }

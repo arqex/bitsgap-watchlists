@@ -86,11 +86,11 @@ export class PairSelector extends Component {
 
     let entries = [];
     for( let exchange in pairsByExchange ){
-      pairsByExchange[exchange].forEach( pair => {
+      pairsByExchange[exchange].forEach( symbol => {
         entries.push({
           exchange,
-          pair,
-          tag: pair.replace('_', '').replace(/\(.*?\)/, '')
+          symbol,
+          tag: symbol.replace('_', '').replace(/\(.*?\)/, '')
         })
       })
     }
@@ -109,15 +109,15 @@ export class PairSelector extends Component {
 
 
 const defaultResults = [
-  {item: {exchange: 'bitfinex', pair: 'BTC_USDT', tag: 'BTCUSDT'} },
-  {item: {exchange: 'kucoin', pair: 'ETH_USDT', tag: 'ETHUSDT'} },
-  {item: {exchange: 'binance', pair: 'BNB_USDT', tag: 'ADAUSDT'} },
-  {item: {exchange: 'kucoin', pair: 'DOT_BTC', tag: 'DOTBTC'} },
-  {item: {exchange: 'bittrex', pair: 'ADA_USDT', tag: 'ADAUSDT'} },
-  {item: {exchange: 'hitbtc', pair: 'DOT_BTC', tag: 'DOTBTC'} },
-  {item: {exchange: 'ftx', pair: 'SOL_BTC', tag: 'SOLBTC'} },
-  {item: {exchange: 'huobi', pair: 'XRP_BTC', tag: 'XRPBTC'} },
-  {item: {exchange: 'coinbase pro', pair: 'LTC_BTC', tag: 'LTCBTC'} },
-  {item: {exchange: 'poloniex', pair: 'AVA_BTC', tag: 'AVABTC'} },
-  {item: {exchange: 'gemini', pair: 'LUNA_BTC', tag: 'LUNABTC'} }
+  {item: {exchange: 'bitfinex', symbol: 'BTC_USDT', tag: 'BTCUSDT'} },
+  {item: {exchange: 'kucoin', symbol: 'ETH_USDT', tag: 'ETHUSDT'} },
+  {item: {exchange: 'binance', symbol: 'BNB_USDT', tag: 'ADAUSDT'} },
+  {item: {exchange: 'kucoin', symbol: 'DOT_BTC', tag: 'DOTBTC'} },
+  {item: {exchange: 'bittrex', symbol: 'ADA_USDT', tag: 'ADAUSDT'} },
+  {item: {exchange: 'hitbtc', symbol: 'DOT_BTC', tag: 'DOTBTC'} },
+  {item: {exchange: 'ftx', symbol: 'SOL_BTC', tag: 'SOLBTC'} },
+  {item: {exchange: 'huobi', symbol: 'XRP_BTC', tag: 'XRPBTC'} },
+  {item: {exchange: 'coinbase pro', symbol: 'LTC_BTC', tag: 'LTCBTC'} },
+  {item: {exchange: 'poloniex', symbol: 'AVA_BTC', tag: 'AVABTC'} },
+  {item: {exchange: 'gemini', symbol: 'LUNA_USD', tag: 'LUNAUSD'} }
 ]

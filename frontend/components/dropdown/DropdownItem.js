@@ -2,8 +2,9 @@ import { html } from "../../vendor/preact.js"
 import { Button } from "../button/Button.js"
 
 export function DropdownItem(props) {
+  const {onClick, id} = props;
   return html`
-    <div onClick=${props.onClick} class="item">
+    <div onClick=${ () => onClick(id) } class="item">
       <span class="item-title">
         ${this.props.children}
       </span>

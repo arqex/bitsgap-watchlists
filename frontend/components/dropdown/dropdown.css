@@ -10,7 +10,10 @@
   background-color: #3c3750;
   border: 0;
   color: #fff;
-  padding: 4px 8px;
+  padding: 4px 24px 4px 8px;
+  overflow: hidden;
+  max-width: 150px;
+  position: relative
 }
 
 .bge_dropdown-button:hover {
@@ -20,7 +23,8 @@
 
 .bge_dropdown-button i {
   display: inline-block;
-  margin-left: 8px;
+  position: absolute;
+  top: 6px; right: 8px;
 }
 
 
@@ -77,5 +81,13 @@
   .separator--bottom {
     margin-top: 4px;
   }
+}
 
+
+.bge_dropdown-button .button-text {
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
 }

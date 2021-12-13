@@ -40,7 +40,7 @@ export class WatchlistBody extends Component {
   }
 
   _onRemovePair = (pairData) => {
-    deleteWatchlist( this.props.selectedWatchlistId );
+    this.props.onDeletePair(pairData);
   }
 
   _onSelectPair = (pairData) => {

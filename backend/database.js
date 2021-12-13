@@ -37,7 +37,7 @@ const actionHandlers = {
     return {id: toStore.id};
   },
 
-  async deleteWatchlist({id}) {
+  async deleteWatchlist(id) {
     let currentLists = await this.getWatchlists();
     let watchlists = currentLists.filter( l => l.id !== id );
 
@@ -47,7 +47,7 @@ const actionHandlers = {
     return watchlists;
   },
 
-  async getWatchlistPairs({id}) {
+  async getWatchlistPairs(id) {
     let key = `wl:${id}`;
     let results = (await getValues([key]))[key];
     return results?.length ? results : [];
@@ -80,7 +80,7 @@ const actionHandlers = {
     let updatedPairs = pairs.filter( p => !areEquals(p, pair) );
 
     await setValues({
-      [`wl:${pair}`]: updatedPairs
+      [`wl:${watchlistId}`]: updatedPairs
     });
 
     return updatedPairs;
@@ -98,12 +98,14 @@ function createId() {
 
 // Let's promisify the storage API
 function getValues( keys ){
+  console.log('Getting value', keys);
   return new Promise( (resolve) => {
     chrome.storage.local.get( keys, resolve );
   })
 }
 
 function setValues( map ){
+  console.log('Setting value', map);
   return new Promise( (resolve) => {
     chrome.storage.local.set( map, resolve );
   })
@@ -113,4 +115,9 @@ function deleteValues( keys ){
   return new Promise( (resolve) => {
     chrome.storage.local.remove( keys, resolve );
   })
+}
+
+
+function areEquals( pair1, pair2 ){
+  return pair1.exchange === pair2.exchange && pair1.symbol === pair2.symbol;
 }

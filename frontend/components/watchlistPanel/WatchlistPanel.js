@@ -1,4 +1,4 @@
-import { addPairToWatchlist, createWatchlist, deleteWatchlist } from "../../data/actions.js";
+import { addPairToWatchlist, createWatchlist, deleteWatchlist, removePairFromWatchlist } from "../../data/actions.js";
 import { loadWatchlists } from "../../data/loaders.js";
 import { html, Component } from "../../vendor/preact.js";
 import { PairSelectorModal } from "../pairSelector/PairSelectorModal.js";
@@ -87,7 +87,7 @@ export class WatchlistPanel extends Component {
   checkSelectedMarket() {
     if( !this.state.selectedWatchlistId ){
       const {watchlists} = loadWatchlists();
-      if( watchlists ) {
+      if( watchlists?.length > 0 ) {
         const selected = this.getSelected( watchlists );
         this.setState({selectedWatchlistId: selected?.id});
       }

@@ -1,6 +1,6 @@
 import { loadWatchlistPairs } from "../../../data/loaders.js";
 import { Component, html } from "../../../vendor/preact.js";
-import { EmptyWatchlist } from "./EmptyWatchlist.js";
+import { Button } from "../../button/Button.js";
 import { PairItem } from "./PairItem.js";
 
 export class PairList extends Component {
@@ -34,8 +34,14 @@ export class PairList extends Component {
 
   renderEmpty() {
     return html`
-      <${EmptyWatchlist}
-        onAddPair=${this.props.onAddPair} />
+      <div class="no-watchlists-body">
+        <div class="no-watchlist-message">
+          No pairs in this watchlist yet.
+        </div>
+        <${Button} onClick=${ this.props.onAddPair }>
+          Add a pair
+        <//>
+      </div>
     `
   }
 }
