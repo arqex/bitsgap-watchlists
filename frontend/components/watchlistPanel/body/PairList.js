@@ -19,6 +19,8 @@ export class PairList extends Component {
   }
 
   _renderPair = pair => {
+    if( !pair ) return;
+    
     return html`
       <${PairItem}
         key=${`${pair.exchange}${pair.symbol}`}

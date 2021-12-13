@@ -62,17 +62,8 @@ export class PairSelector extends Component {
         item=${item}
         isHighlighted=${this.state.highlightedIndex === i}
         mode=${this.props.mode}
-        onSelected=${this.props.onSelected}
-        onRemoved=${this._onPairRemoved} />
+        onSelected=${this._onSelected} />
     `
-  }
-
-  _onPairSelected = pair => {
-    console.log('Selected', pair);
-  }
-
-  _onPairRemoved = pair => {
-    console.log('Removed', pair);
   }
 
   componentDidMount() {
@@ -121,28 +112,40 @@ export class PairSelector extends Component {
     return new Fuse(entries, options);
   }
 
-  _onKeyDown = e => {
-    console.log(e);
-    if( e.key === 'ArrowDown' ){
-      e.preventDefault();
+  _onSelected = item => {
+    this.props.onSelected(item);
+    // Seems that we need to wait for focusing the input
+    setTimeout(() => {
+      this.input?.current?.focus();
+      this.input?.current?.select();
+    }, 200);
+  }
+
+  _onKeyDown = (event) => {
+    const {key} = event;
+    if( key === 'ArrowDown' ){
+      event.preventDefault();
       let results = this.getResults();
       let current = this.state.highlightedIndex;
       this.setState({
         highlightedIndex: current === results.length - 1 ? 0 : current + 1
       });
     }
-    else if( e.key === 'ArrowUp' ){
-      e.preventDefault();
+    else if( key === 'ArrowUp' ){
+      event.preventDefault();
       let results = this.getResults();
       let current = this.state.highlightedIndex;
       this.setState({
         highlightedIndex: current === 0 ? results.length - 1 : current - 1
       });
     }
-    else if( e.key === 'Enter' ){
-      e.preventDefault();
+    else if( key === 'Enter' ){
+      event.preventDefault();
       let results = this.getResults();
-      this.props.onSelected( results[this.highlightedIndex] );
+      let selected = results[this.state.highlightedIndex ];
+      if( selected ){
+        this.props.onSelected( selected.item );
+      }
     }
   }
 }

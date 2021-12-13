@@ -1,4 +1,3 @@
-import { getPairSelector } from "../../../scripts/pairSelector.js";
 import { html, Component } from "../../../vendor/preact.js";
 import { NoWatchlistsBody } from "./NoWatchlistsBody.js";
 import { PairList } from "./PairList.js";
@@ -28,21 +27,13 @@ export class WatchlistBody extends Component {
   }
 
   renderWatchlist( watchlistId ) {
+    const {onAddPair, onDeletePair, onSelectedPair} = this.props;
     return html`
       <${PairList}
-        onAddPair=${this.props.onAddPair}
-        onRemovePair=${this._onRemovePair}
-        onSelectPair=${this._onSelectPair}
+        onAddPair=${onAddPair}
+        onRemovePair=${onDeletePair}
+        onSelectPair=${onSelectedPair}
         watchlistId=${watchlistId} />
     `
-  }
-
-  _onRemovePair = (pairData) => {
-    this.props.onDeletePair(pairData);
-  }
-
-  _onSelectPair = (pairData) => {
-    let pairSelector = getPairSelector();
-    pairSelector(pairData.symbol, pairData.exchange);
   }
 }

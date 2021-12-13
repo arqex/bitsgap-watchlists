@@ -1,6 +1,7 @@
 import { addPairToWatchlist, createWatchlist, deleteWatchlist, removePairFromWatchlist } from "../../data/actions.js";
 import { getLastWatchlistId, saveLastWatchlistId } from "../../data/frontendStore.js";
 import { loadWatchlists } from "../../data/loaders.js";
+import { getPairSelector } from "../../scripts/pairSelector.js";
 import { html, Component } from "../../vendor/preact.js";
 import { PairSelectorModal } from "../pairSelector/PairSelectorModal.js";
 import { WatchlistBody } from "./body/WatchlistBody.js";
@@ -37,7 +38,7 @@ export class WatchlistPanel extends Component {
           open=${ this.state.modalOpen }
           mode=${ this.state.modalMode }
           onClose=${ this._closeModal }
-          onSelected=${ this._onAddPair } />
+          onSelected=${ this._onSelectPair } />
       </div>
     `
   }
@@ -67,7 +68,7 @@ export class WatchlistPanel extends Component {
     return await deleteWatchlist(watchlistId);
   }
 
-  _onSelectPair = async (pair) => {
+  _onSelectPair =(pair) => {
     if( this.state.modalMode === 'add' ){
       this._onAddPair(pair);
     }
@@ -77,13 +78,14 @@ export class WatchlistPanel extends Component {
     }
   }
 
-  _onAddPair = async (pair) => {
-    await addPairToWatchlist(this.getSelectedWatchlistId(), pair);
-    this._onSwitchPair(pair);
+  _onAddPair = (pair) => {
+    addPairToWatchlist(this.getSelectedWatchlistId(), pair);
   }
 
-  _onSwitchPair = (selectedPair) => {
-    this.setState(selectedPair);
+  _onSwitchPair = (pairData) => {
+    let pairSelector = getPairSelector();
+    pairSelector(pairData.symbol, pairData.exchange);
+    this.setState(pairData);
   }
 
   _onDeletePair = (pair) => {

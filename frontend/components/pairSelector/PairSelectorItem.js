@@ -26,10 +26,6 @@ export class PairSelectorItem extends Component {
     console.log(typeof this.props.onSelected);
     this.props.onSelected(this.props.item);
   }
-
-  _onRemove = () => {
-    this.props.onRemoved(this.props.item);
-  }
 }
 
 
