@@ -34,9 +34,12 @@
   }
 
   .pairItem24h {
-    color: #fff9;
+    color: #fff8;
   }
 
+  .theme-day .pairItem24h {
+    color: #0008;
+  }
   .pairItemControls {
     display: none;
   }
