@@ -1,6 +1,7 @@
 import { addPairToWatchlist, createWatchlist, deleteWatchlist, removePairFromWatchlist } from "../../data/actions.js";
 import { getLastWatchlistId, saveLastWatchlistId } from "../../data/frontendStore.js";
 import { loadWatchlists } from "../../data/loaders.js";
+import { refreshBalances, socketFeed } from "../../data/socketFeed.js";
 import { getPairSelector } from "../../scripts/pairSelector.js";
 import { html, Component } from "../../vendor/preact.js";
 import { PairSelectorModal } from "../pairSelector/PairSelectorModal.js";
@@ -35,6 +36,7 @@ export class WatchlistPanel extends Component {
           onDeletePair=${ this._onDeletePair }
           onAddPair=${ this._openAddModal } />
         <${PairSelectorModal}
+          connectedExchanges=${ this.getConnectedExchanges() }
           open=${ this.state.modalOpen }
           mode=${ this.state.modalMode }
           onClose=${ this._closeModal }
@@ -53,6 +55,27 @@ export class WatchlistPanel extends Component {
     const {watchlists} = loadWatchlists();
     let selected = this.getSelected(watchlists);
     return selected?.id;
+  }
+
+  connectedExchanges = false
+  getConnectedExchanges() {
+    if( this.connectedExchanges ){
+      return this.connectedExchanges;
+    }
+
+    const balances = socketFeed.getValue('balances');
+    if( balances ){
+      const exchanges = [];
+      Object.keys(balances).forEach( exchangeKey => {
+        if( balances[exchangeKey].uts ){
+          exchanges.push(exchangeKey);
+        }
+      })
+      this.connectedExchanges = exchanges;
+      return exchanges;
+    }
+
+    return [];
   }
 
   _onCreateWatchlist = async (name) => {
@@ -112,9 +135,12 @@ export class WatchlistPanel extends Component {
 
   componentDidMount(){
     document.body.addEventListener('keydown', this._onTyping );
+    socketFeed.subscribe('balances', this._refresh);
+    refreshBalances();
   }
 
   componentWillUnmount() {
+    socketFeed.unsubscribe('balances', this._refresh);
     document.body.removeEventListener('keydown', this._onTyping );
   }
   
@@ -126,8 +152,11 @@ export class WatchlistPanel extends Component {
     }
   }
 
+  _refresh = () => {
+    this.forceUpdate();
+  }
+
   openQuickSearch() {
     this._openSearchModal();
-    console.log('Opening quick search');
   }
 }

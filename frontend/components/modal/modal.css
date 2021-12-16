@@ -19,9 +19,18 @@
     flex-direction: column;
     align-items: stretch;
   }
+
+  .theme-day .box {
+    background-color: #fff;
+    color: #333;
+  }
   
   .title {
     color: #ccc;
+  }
+
+  .theme-day .title {
+    color: #333;
   }
   
   .header {

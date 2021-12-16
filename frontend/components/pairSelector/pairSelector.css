@@ -44,14 +44,26 @@
     cursor: pointer;
   }
 
+  .theme-day .item {
+    border-bottom: 1px solid #d0d0d2;
+  }
+
   .item:hover {
     background: #eef2;
+  }
+
+  .theme-day .item:hover {
+    background: #e5e0ef;
   }
 
   .itemExchange {
     color: #ddd;
     display: flex;
     align-items: center;
+  }
+
+  .theme-day .itemExchange {
+    color: #333;
   }
 
   .itemExchangeImage {
@@ -62,6 +74,39 @@
   .highlighted {
     border: 1px solid #0083ff;
   }
+
+  .theme-day .highlighted {
+    border: 1px solid #0067da;
+  }
+
+  .exchangeFilterWrapper {
+    padding: 8px 10px;
+    overflow-x: auto;
+    flex-shrink: 0;
+  }
+
+  .exchange-filters {
+    display: flex;
+    flex-direction: row;
+  }
+  .exchange-filter {
+    background: #fff2;
+    border-radius: 10px;
+    margin-right: 4px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    font-size: .9em;
+    cursor: pointer;
+  }
+
+  .theme-day .exchange-filter {
+    background-color: #eee;
+  }
+  .exchange-filter.selected {
+    background-color: #0067da;
+    color: #fff;
+  }
 }
+
 
 

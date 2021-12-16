@@ -13,6 +13,10 @@
     margin-bottom: 5px;
     font-size: .85em;
   }
+
+  .theme-day label {
+    color: #444;
+  }
   
   input {
     display: block;
@@ -21,11 +25,21 @@
     padding: 10px;
     color: #fff
   }
+
+  .theme-day input {
+    background-color: #eee;
+    color: #222;
+  }
   
   input:focus {
     border: 2px solid #fff3;
     outline: none;
   }
+
+  .theme-day input:focus {
+    border: 2px solid #0003;
+  }
+  
   
   .error_message {
     font-size: .85em;

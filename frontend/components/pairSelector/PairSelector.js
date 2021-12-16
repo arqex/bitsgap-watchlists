@@ -2,6 +2,8 @@ import { refreshMarketPairs, socketFeed } from "../../data/socketFeed.js";
 import { Component, html, createRef } from "../../vendor/preact.js";
 import Fuse from "../../vendor/fuse.js";
 import { PairSelectorItem } from "./PairSelectorItem.js";
+import { getLastExchangeInSelector, saveLastExchangeInSelector } from "../../data/frontendStore.js";
+import { ExchangeFilters } from "./ExchangeFilters.js";
 
 export class PairSelector extends Component {
   state = {
@@ -19,6 +21,8 @@ export class PairSelector extends Component {
       return html`<div class="pairSelector">Loading...</div>`;
     }
 
+    const {connectedExchanges} = this.props;
+
     return html`
       <div class="pairSelector">
         <div class="inputWrapper">
@@ -29,6 +33,13 @@ export class PairSelector extends Component {
             value=${query}
             onInput=${this._onSearchChange}
             onKeyDown=${this._onKeyDown} />
+        </div>
+        <div class="exchangeFilterWrapper">
+          <${ExchangeFilters}
+            exchanges=${Object.keys(socketFeed.getValue('allPairs'))}
+            connected=${connectedExchanges}
+            selected=${this.getSelectedExchanges()}
+            onSelect=${this._onFilterExchanges } />
         </div>
         <div class="resultsWrapper">
           <div class="results">
@@ -70,16 +81,25 @@ export class PairSelector extends Component {
     if( !this.fuse ){
       refreshMarketPairs();
     }
-    socketFeed.subscribe('allPairs', this._onPairsUpdated );
+    socketFeed.subscribe('allPairs', this._updateIndex );
 
     this.input?.current?.focus();
   }
 
-  componentWillUnmount() {
-    socketFeed.unsubscribe('allPairs', this._onPairsUpdated );
+  lastFilter = getLastExchangeInSelector()
+  componentDidUpdate() {
+    const filter = getLastExchangeInSelector()
+    if( this.lastFilter !== filter ){
+      this.lastFilter = filter;
+      this._updateIndex();
+    }
   }
 
-  _onPairsUpdated = () => {
+  componentWillUnmount() {
+    socketFeed.unsubscribe('allPairs', this._updateIndex );
+  }
+
+  _updateIndex = () => {
     this.setState({
       fuse: this.createIndex()
     });
@@ -89,17 +109,21 @@ export class PairSelector extends Component {
     const pairsByExchange = socketFeed.getValue('allPairs');
     if( !pairsByExchange ) return;
 
+    const isSelected = this.getExchangeFilter();
+
     let entries = [];
     for( let exchange in pairsByExchange ){
-      pairsByExchange[exchange].forEach( symbol => {
-        let tag = symbol.replace('_', '').replace(/\(.*?\)/, '');
-        entries.push({
-          exchange,
-          symbol,
-          tag,
-          queryStr: `${tag} ${symbol.replace('_', ' ')} ${exchange}`
+      if( isSelected(exchange) ){
+        pairsByExchange[exchange].forEach( symbol => {
+          let tag = symbol.replace('_', '').replace(/\(.*?\)/, '');
+          entries.push({
+            exchange,
+            symbol,
+            tag,
+            queryStr: `${tag} ${symbol.replace('_', ' ')} ${exchange}`
+          })
         })
-      })
+      }
     }
 
     const options = {
@@ -110,6 +134,25 @@ export class PairSelector extends Component {
     }
     
     return new Fuse(entries, options);
+  }
+
+  getExchangeFilter() {
+    const selectedExchanges = this.getSelectedExchanges();
+    if( selectedExchanges === 'all' ) return () => true;
+
+    if( selectedExchanges === 'connected' ){
+      const {connectedExchanges} = this.props;
+      return exchange => connectedExchanges.includes(exchange);
+    }
+
+    return (exchange) => selectedExchanges === exchange;
+  }
+
+  getSelectedExchanges() {
+    return getLastExchangeInSelector() ||
+      this.props.connectedExchanges && 'connected' ||
+      'all'
+    ;
   }
 
   _onSelected = item => {
@@ -148,8 +191,11 @@ export class PairSelector extends Component {
       }
     }
   }
-}
 
+  _onFilterExchanges = filter => {
+    saveLastExchangeInSelector(filter);
+  }
+}
 
 const defaultResults = [
   {item: {exchange: 'bitfinex', symbol: 'BTC_USDT', tag: 'BTCUSDT'} },

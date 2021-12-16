@@ -6,6 +6,10 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 }
 
+.theme-day .bge_dropdown_panel {
+  background-color: #fff;
+}
+
 .bge_dropdown-button {
   background-color: #3c3750;
   border: 0;
@@ -16,9 +20,19 @@
   position: relative
 }
 
+.theme-day .bge_dropdown-button {
+  background-color: #e5e0ef;
+  color: #333;
+}
+
 .bge_dropdown-button:hover {
   background-color: #494262;
   color: #fff;
+}
+
+.theme-day .bge_dropdown-button:hover {
+  background-color: #fff;
+  color: #333;
 }
 
 .bge_dropdown-button i {
@@ -52,8 +66,16 @@
     cursor: pointer;
   }
 
+  .theme-day .item {
+    color: #333;
+  }
+
   .item:hover {
     background: #fff1;
+  }
+
+  .theme-day .item:hover {
+    background-color: #e5e0ef;
   }
 
   .item-remove {
@@ -72,6 +94,10 @@
     width: 100%;
     height: 1px;
     background-color: #fff1;
+  }
+
+  .theme-day .separator {
+    background-color: #d0d0d2;
   }
 
   .separator--top {

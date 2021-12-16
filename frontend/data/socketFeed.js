@@ -56,24 +56,70 @@ function classifyMessages( message ){
   else if( proc === 'app.openorders' ){
     setValue(`openOrders:${message.skey.market}`, value.orders);
   }
+  else if( proc === 'pairs' ){
+    setPrices( message.skey.market, message.value );
+  }
+  else if( proc === 'rts' ){
+    setPrice( message.skey.market, message.skey.pair, message.value )
+  }
+  else if( proc === 'sym1d.all' ){
+    setPrices1dAgo( message.skey.market, message.value);
+  }
+  else if( proc === 'sym1d' ){
+    setPrice1dAgo( message.skey.market, message.skey.pair, message.value);
+  }
 }
 
 export function refreshMarketPairs() {
   const skey = {"proc":"v_conf_pairs_to","trade":"real"};
   subscribe( skey);
-  setTimeout( () => unsubscribe( skey ), 100);
+  setTimeout( () => unsubscribe( skey ), 1000);
 }
 
 export function refreshBalances() {
   const skey = {"proc":"app.markets.balance","trade":"real"};
   userSubscribe( skey);
-  setTimeout( () => userUnsubscribe( skey), 100);
+  setTimeout( () => userUnsubscribe( skey), 1000);
 }
 
 export function refreshMarketOrders( market ) {
   const skey = {"proc":"app.openorders","market": market};
   userSubscribe( skey);
-  setTimeout( () => userUnsubscribe( skey), 100);
+  setTimeout( () => userUnsubscribe( skey), 1000);
+}
+
+export function refreshPrice( market, symbol ){
+  const skey = {"proc":"rts", "market": market, "pair": symbol};
+  subscribe(skey);
+  setTimeout( () => unsubscribe( skey ), 1000 );
+}
+
+export function refreshPrice1dAgo( market, symbol ){
+  const skey = {"proc":"sym1d", "market": market, "pair": symbol};
+  subscribe(skey);
+  setTimeout( () => unsubscribe( skey ), 1000 );
+}
+
+
+function setPrices( market, values ){
+  for( let pair in values ){
+    setPrice(market, pair, values[pair]);
+  }
+}
+
+function setPrice( market, pair, value ){
+  setValue(`price:${market}:${pair}`, value);
+}
+
+
+function setPrices1dAgo( market, values ){
+  for( let pair in values ){
+    setPrice1dAgo(market, pair, values[pair]);
+  }
+}
+
+function setPrice1dAgo( market, pair, value ){
+  setValue(`1dAgo:${market}:${pair}`, value);
 }
 
 

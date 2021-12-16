@@ -46,3 +46,15 @@ export function saveLastWatchlistId( watchlistId ){
 export function getLastWatchlistId(){
   return getStore().watchlistId;
 }
+
+export function saveLastExchangeInSelector(lastExchangeInSelector){
+  let data = {
+    ...getStore(),
+    lastExchangeInSelector
+  };
+  saveStore(data);
+}
+
+export function getLastExchangeInSelector(){
+  return getStore().lastExchangeInSelector;
+}

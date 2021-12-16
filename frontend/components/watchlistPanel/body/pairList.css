@@ -12,10 +12,45 @@
     border-bottom: 1px solid #334;
     cursor: pointer;
     color: #ddd;
+    height: 44px;
+  }
+
+  .theme-day .pairItem {
+    color: #333;
+    border-bottom-color: #d0d0d2;
+  }
+
+  .pairItemPriceWrapper {
+    font-size: .8em;
+    text-align: right;
+  }
+
+  .red {
+    color: #f44336;
+  }
+
+  .green {
+    color: #4caf50;
+  }
+
+  .pairItem24h {
+    color: #fff9;
+  }
+
+  .pairItemControls {
+    display: none;
   }
 
   .pairItem:hover {
     background: #eef2;
+  }
+
+  .pairItem:hover .pairItemControls  {
+    display: inline-block;
+  }
+
+  .pairItem:hover .pairItemPriceWrapper {
+    display: none;
   }
 
   .pairItemSymbol {

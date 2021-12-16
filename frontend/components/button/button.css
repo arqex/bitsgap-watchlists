@@ -7,13 +7,27 @@
   cursor: pointer;
 }
 
+.theme-day .bge_button {
+  color: #333;
+  border-color: #0004;
+}
+
 
 .bge_button:hover {
   background-color: #FFF3;
   border: 1px solid #0083ff
 }
 
+.theme-day .bge_button:hover {
+  color: #0083ff;
+}
+
 .transparent {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.theme-day .transparent {
   background-color: transparent;
   border-color: transparent;
 }
