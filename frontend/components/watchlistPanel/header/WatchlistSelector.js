@@ -1,3 +1,4 @@
+import memoizeOne from "../../../vendor/memoize-one.js";
 import { html, Component } from "../../../vendor/preact.js";
 import { DropdownButton } from "../../dropdown/DropdownButton.js";
 import { DropdownItem } from "../../dropdown/DropdownItem.js";
@@ -33,7 +34,7 @@ export class WatchlistSelector extends Component {
                   <//>
                 <//>
                 <${DropdownSection} topSeparator>
-                  ${ watchlists.map( this._renderListItem ) }
+                  ${ sort(watchlists).map( this._renderListItem ) }
                 <//>
               </div>
             `}
@@ -71,7 +72,10 @@ export class WatchlistSelector extends Component {
   }
 
   _openCreateModal = () => {
-    this.setState({createModalOpen: true});
+    this.setState({
+      open: false,
+      createModalOpen: true
+    });
   }
 
   _closeCreateModal = () => {
@@ -88,3 +92,11 @@ export class WatchlistSelector extends Component {
     this.props.onSelect(id);
   }
 }
+
+const sort = memoizeOne( watchlists => {
+  const sorted = [...watchlists];
+  sorted.sort( (a,b) => {
+    return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+  });
+  return sorted;
+})

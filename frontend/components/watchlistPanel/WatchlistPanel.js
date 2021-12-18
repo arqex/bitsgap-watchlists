@@ -146,7 +146,7 @@ export class WatchlistPanel extends Component {
   
   _onTyping = (e) => {
     if( e.target.tagName === 'INPUT' || this.state.modalOpen ) return;
-
+    if( e.metaKey || e.altKey || e.ctrlKey ) return;
     if( e.key.match(/^[a-zA-Z0-9]$/) ){
       this.openQuickSearch();
     }

@@ -58,5 +58,8 @@ export class CreateWatchlistModal extends Component {
     if( !prevProps.open && this.props.open ){
       this.input.current?.focus();
     }
+    else if(prevProps.open && !this.props.open ){
+      this.setState({name: '', error: ''});
+    }
   }
 }

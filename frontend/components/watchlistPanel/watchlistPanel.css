@@ -15,6 +15,10 @@
     margin-bottom: 20px;
   }
 
+  .theme-day .no-watchlist-message {
+    color: #333;
+  }
+
   .watchlist-header {
     display: flex;
     justify-content: space-between;

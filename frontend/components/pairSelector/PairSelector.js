@@ -130,7 +130,8 @@ export class PairSelector extends Component {
       keys: [
         {name: 'queryStr'}
       ],
-      threshold: 0.6
+      threshold: 0.2,
+      useExtendedSearch: true
     }
     
     return new Fuse(entries, options);
@@ -187,7 +188,7 @@ export class PairSelector extends Component {
       let results = this.getResults();
       let selected = results[this.state.highlightedIndex ];
       if( selected ){
-        this.props.onSelected( selected.item );
+        this._onSelected(selected.item);
       }
     }
   }
