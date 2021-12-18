@@ -5,8 +5,8 @@ function createRootNode(){
   let rootNode = document.createElement('div');
   setStyles(rootNode, {
     position: 'absolute',
-    top: '59px',
-    left: '5px',
+    top: '0px',
+    left: '0px',
     bottom: '0px',
     width: '0px'
   });

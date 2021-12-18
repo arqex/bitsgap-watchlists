@@ -1,3 +1,4 @@
+import { ContainerTracker } from "../../bitsgapConnectors/containerTracker.js";
 import { addPairToWatchlist, createWatchlist, deleteWatchlist, removePairFromWatchlist } from "../../data/actions.js";
 import { getLastWatchlistId, saveLastWatchlistId } from "../../data/frontendStore.js";
 import { loadWatchlists } from "../../data/loaders.js";
@@ -15,13 +16,20 @@ export class WatchlistPanel extends Component {
     modalMode: 'add'
   }
 
+  defaultDimensions = {
+    top: 59,
+    left: 5,
+    width: 290,
+    height: 1000
+  }
+
   render() {
     const {isLoading, watchlists} = loadWatchlists();
     if( isLoading ) return 'Loading...';
 
     const selected = this.getSelected(watchlists);
     return html`
-      <div class="trading-tables bge_watchlists" style="width: 290px">
+      <div class="trading-tables bge_watchlists" style=${this.getDimensions()}>
         <${WatchlistHeader}
           watchlists=${watchlists}
           selected=${ selected }
@@ -137,11 +145,15 @@ export class WatchlistPanel extends Component {
     document.body.addEventListener('keydown', this._onTyping );
     socketFeed.subscribe('balances', this._refresh);
     refreshBalances();
+    this.trackContainer();
   }
 
   componentWillUnmount() {
     socketFeed.unsubscribe('balances', this._refresh);
     document.body.removeEventListener('keydown', this._onTyping );
+    if( this.tracker ){
+      this.tracker.removeChangeListener( this._refresh );
+    }
   }
   
   _onTyping = (e) => {
@@ -158,5 +170,16 @@ export class WatchlistPanel extends Component {
 
   openQuickSearch() {
     this._openSearchModal();
+  }
+
+  tracker = null
+  trackContainer() {
+    this.tracker = new ContainerTracker('.trading-page__column');
+    this.setState({dimensions: this.tracker.getDimensions() });
+    this.tracker.addChangeListener( this._refresh );
+  }
+
+  getDimensions() {
+    return this.tracker?.getDimensions() || this.defaultDimensions;
   }
 }

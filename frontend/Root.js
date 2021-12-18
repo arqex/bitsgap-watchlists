@@ -54,9 +54,8 @@ class Root extends Component {
   onNavigation() {
     const currentRoute = window.location.pathname;
     this.checkDataInitialization( currentRoute );
-    this.setState({
-      currentRoute: window.location.pathname
-    })
+    console.log('setting route', currentRoute);
+    this.setState({currentRoute})
   }
 }
 

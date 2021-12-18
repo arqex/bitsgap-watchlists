@@ -1,6 +1,7 @@
 .bge_watchlists {
   contain: layout inline-size style;
   container-name: watchlists;
+  position: absolute;
 }
 
 @container watchlists (min-width: 0px) {
