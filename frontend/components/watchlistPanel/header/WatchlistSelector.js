@@ -22,7 +22,7 @@ export class WatchlistSelector extends Component {
           open=${ this.state.open }>
           ${selected.name}
         <//>
-        <div class="selector-panel">
+        <div class="selectorPanel">
           <${Reveal}
             open=${this.state.open}
             onClickOut=${this._checkClose}>

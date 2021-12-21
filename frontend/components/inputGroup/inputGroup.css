@@ -6,44 +6,41 @@
   margin-bottom: 10px;
 }
 
-@container (min-width: 0px) {
-  label {
-    display: block;
-    color: white;
-    margin-bottom: 5px;
-    font-size: .85em;
-  }
+.bge_input_group label {
+  display: block;
+  color: white;
+  margin-bottom: 5px;
+  font-size: .85em;
+}
 
-  .theme-day label {
-    color: #444;
-  }
-  
-  input {
-    display: block;
-    background-color: #1d1a28;
-    border: 2px solid #0001;
-    padding: 10px;
-    color: #fff
-  }
+.theme-day .bge_input_group label {
+  color: #444;
+}
 
-  .theme-day input {
-    background-color: #eee;
-    color: #222;
-  }
-  
-  input:focus {
-    border: 2px solid #fff3;
-    outline: none;
-  }
+.bge_input_group input {
+  display: block;
+  background-color: #1d1a28;
+  border: 2px solid #0001;
+  padding: 10px;
+  color: #fff
+}
 
-  .theme-day input:focus {
-    border: 2px solid #0003;
-  }
-  
-  
-  .error_message {
-    font-size: .85em;
-    color: #f44336;
-    margin-top: 4px;
-  }
+.theme-day .bge_input_group input {
+  background-color: #eee;
+  color: #222;
+}
+
+.bge_input_group input:focus {
+  border: 2px solid #fff3;
+  outline: none;
+}
+
+.theme-day .bge_input_group input:focus {
+  border: 2px solid #0003;
+}
+
+.bge_input_group .errorMessage {
+  font-size: .85em;
+  color: #f44336;
+  margin-top: 4px;
 }

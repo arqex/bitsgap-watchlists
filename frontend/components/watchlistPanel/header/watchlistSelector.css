@@ -1,26 +1,25 @@
 .bge_watchlist_selector {
-  contain: layout inline-size style;
-  container-name: watchlist_selector;
-
   position: relative;
   min-width: 100px;
   z-index: 1;
 }
 
-@container watchlist_selector (min-width: 0px) {
-  .selector-panel {
-    position: absolute;
-    top: 100%; left: 0;
-    min-width: 200px;
-  }
+.bge_watchlist_selector .selectorPanel {
+  position: absolute;
+  top: 100%; left: 0;
+  min-width: 200px;
+}
 
-  .item-title i {
-    display: inline-block;
-    margin-right: 5px;
-  }
+.bge_watchlist_selector i {
+  display: inline-block;
+  margin-right: 5px;
+}
 
-  i.fa-plus {
-    margin-left: 3px;
-    margin-right: 6px !important;
-  }
+.bge_watchlist_selector i.fa-plus {
+  margin-left: 3px;
+  margin-right: 6px !important;
+}
+
+.bge_watchlist_selector button i {
+  margin-right: 0;
 }

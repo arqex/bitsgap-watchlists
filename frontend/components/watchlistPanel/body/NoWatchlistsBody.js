@@ -9,8 +9,8 @@ export class NoWatchlistsBody extends Component {
 
   render() {
     return html`
-      <div class="no-watchlists-body">
-        <div class="no-watchlist-message">
+      <div class="noWatchlistsBody">
+        <div class="noWatchlistsMessage">
           Seems that you don't have any watchlists yet.
         </div>
         <${Button} onClick=${ this._openModal }>

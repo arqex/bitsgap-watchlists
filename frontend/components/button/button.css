@@ -22,17 +22,23 @@
   color: #0083ff;
 }
 
-.transparent {
+.bge_button.transparent {
   background-color: transparent;
   border-color: transparent;
 }
 
-.theme-day .transparent {
-  background-color: transparent;
-  border-color: transparent;
-}
-
-.theme-day .transparent:hover {
-  background-color: #0001;
+.bge_button.transparent:hover {
+  background-color: #FFF3;
   border: 1px solid #0083ff
+}
+
+.theme-day .bge_button.transparent {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.theme-day .bge_button.transparent:hover {
+  background-color: #0001;
+  border: 1px solid #0083ff;
+  color: #0083ff;
 }

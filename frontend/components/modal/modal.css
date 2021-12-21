@@ -1,5 +1,4 @@
 .bge_modal {
-  contain: layout inline-size style; 
   position: fixed;
   top: 0; bottom: 0; left: 0; right: 0;
   background-color: #0009;
@@ -9,53 +8,50 @@
   z-index: 10;
 }
 
-@container (min-width: 0px) {
-  .box {
-    background-color: #241f32;
-    box-shadow: 0 0 20px #000;
-    color: white;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .theme-day .box {
-    background-color: #fff;
-    color: #333;
-  }
-  
-  .title {
-    color: #ccc;
-  }
-
-  .theme-day .title {
-    color: #333;
-  }
-  
-  .header {
-    padding: 10px;
-  }
-  
-  .modal-close {
-    position: absolute;
-    top: 6px; right: 4px;
-  }
-  
-  .confirmation-modal-body {
-    padding: 10px 10px 0;
-    width: 300px;
-  }
-  
-  .confirmation-modal-controls {
-    padding: 10px;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .confirmation-confirm {
-    margin-inline-start: 10px;
-  }
+.bge_modal .box {
+  background-color: #241f32;
+  box-shadow: 0 0 20px #000;
+  color: white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
+.theme-day .bge_modal .box {
+  background-color: #fff;
+  color: #333;
+}
+
+.bge_modal .title {
+  color: #ccc;
+}
+
+.theme-day .bge_modal .title {
+  color: #333;
+}
+
+.bge_modal .header {
+  padding: 10px;
+}
+
+.bge_modal .modalClose {
+  position: absolute;
+  top: 6px; right: 4px;
+}
+
+.bge_modal .confirmationModalBody {
+  padding: 10px 10px 0;
+  width: 300px;
+}
+
+.bge_modal .confirmationModalControls {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bge_modal .confirmationConfirm {
+  margin-inline-start: 10px;
+}
 

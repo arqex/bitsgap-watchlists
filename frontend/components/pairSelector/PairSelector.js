@@ -24,7 +24,7 @@ export class PairSelector extends Component {
     const {connectedExchanges} = this.props;
 
     return html`
-      <div class="pairSelector">
+      <div class="bge_pair_selector">
         <div class="inputWrapper">
           <i class="fas fa-search"></i>
           <input

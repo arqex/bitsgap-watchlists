@@ -1,6 +1,4 @@
-.pairSelector {
-  contain: layout inline-size style;
-  container-name: pairSelector;
+.bge_pair_selector {
   height: 80vh;
   width: 90ch;
   max-width: 680px;
@@ -9,104 +7,101 @@
   flex-direction: column;
 }
 
-@container pairSelector (min-width: 0px) {
-  .inputWrapper {
-    position: relative;
-  }
-
-  .inputWrapper i {
-    color: #99a;
-    position: absolute;
-    top: 12px;
-    left: 10px;
-  }
-
-  input {
-    display: block;
-    background-color: #1d1a28;
-    border: 2px solid #0001;
-    padding: 10px 10px 10px 32px;
-    color: #fff;
-    width: 100%;
-  }
-
-  .resultsWrapper {
-    flex-grow: 1;
-    overflow: auto;
-  }
-
-  .item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 10px;
-    border: 1px solid transparent;
-    border-bottom: 1px solid #334;
-    cursor: pointer;
-  }
-
-  .theme-day .item {
-    border-bottom: 1px solid #d0d0d2;
-  }
-
-  .item:hover {
-    background: #eef2;
-  }
-
-  .theme-day .item:hover {
-    background: #e5e0ef;
-  }
-
-  .itemExchange {
-    color: #ddd;
-    display: flex;
-    align-items: center;
-  }
-
-  .theme-day .itemExchange {
-    color: #333;
-  }
-
-  .itemExchangeImage {
-    display: inline-block;
-    margin-left: 4px;
-  }
-
-  .highlighted {
-    border: 1px solid #0083ff;
-  }
-
-  .theme-day .highlighted {
-    border: 1px solid #0067da;
-  }
-
-  .exchangeFilterWrapper {
-    padding: 8px 10px;
-    overflow-x: auto;
-    flex-shrink: 0;
-  }
-
-  .exchange-filters {
-    display: flex;
-    flex-direction: row;
-  }
-  .exchange-filter {
-    background: #fff2;
-    border-radius: 10px;
-    margin-right: 4px;
-    padding: 2px 8px;
-    white-space: nowrap;
-    font-size: .9em;
-    cursor: pointer;
-  }
-
-  .theme-day .exchange-filter {
-    background-color: #eee;
-  }
-  .exchange-filter.selected {
-    background-color: #0067da;
-    color: #fff;
-  }
+.bge_pair_selector .inputWrapper {
+  position: relative;
 }
 
+.bge_pair_selector .inputWrapper i {
+  color: #99a;
+  position: absolute;
+  top: 12px;
+  left: 10px;
+}
+
+.bge_pair_selector input {
+  display: block;
+  background-color: #1d1a28;
+  border: 2px solid #0001;
+  padding: 10px 10px 10px 32px;
+  color: #fff;
+  width: 100%;
+}
+
+.bge_pair_selector .resultsWrapper {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.bge_pair_selector .item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-bottom: 1px solid #334;
+  cursor: pointer;
+}
+
+.theme-day .bge_pair_selector .item {
+  border-bottom: 1px solid #d0d0d2;
+}
+
+.bge_pair_selector .item:hover {
+  background: #eef2;
+}
+
+.theme-day .bge_pair_selector .item:hover {
+  background: #e5e0ef;
+}
+
+.bge_pair_selector .itemExchange {
+  color: #ddd;
+  display: flex;
+  align-items: center;
+}
+
+.theme-day .bge_pair_selector .itemExchange {
+  color: #333;
+}
+
+.bge_pair_selector .itemExchangeImage {
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.bge_pair_selector .highlighted {
+  border: 1px solid #0083ff;
+}
+
+.theme-day .bge_pair_selector .highlighted {
+  border: 1px solid #0067da;
+}
+
+.bge_pair_selector .exchangeFilterWrapper {
+  padding: 8px 10px;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.bge_pair_selector .exchangeFilters {
+  display: flex;
+  flex-direction: row;
+}
+.bge_pair_selector .exchangeFilter {
+  background: #fff2;
+  border-radius: 10px;
+  margin-right: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  font-size: .9em;
+  cursor: pointer;
+}
+
+.theme-day .bge_pair_selector .exchangeFilter {
+  background-color: #eee;
+}
+.bge_pair_selector .exchangeFilter.selected {
+  background-color: #0067da;
+  color: #fff;
+}
 
 

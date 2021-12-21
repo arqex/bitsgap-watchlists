@@ -14,14 +14,14 @@ export function ConfirmationModal(props) {
       ${ () => (
         html`
           <${ModalBox} onClose=${onCancel} title=${title}>
-            <div class="confirmation-modal-body">
+            <div class="confirmationModalBody">
               ${children}
             </div>
-            <div class="confirmation-modal-controls">
+            <div class="confirmationModalControls">
               <div class="confirmation-cancel">
                 ${ renderCancelButton(onCancel, cancelText) }
               </div>
-              <div class="confirmation-confirm">
+              <div class="confirmationConfirm">
                 <${Button} onClick=${onConfirm}>${confirmText}<//>
               </div>
             </div>

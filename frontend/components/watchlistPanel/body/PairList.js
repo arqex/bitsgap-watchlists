@@ -20,7 +20,7 @@ export class PairList extends Component {
     if( !items.length ) return this.renderEmpty();
     
     return html`
-      <div class="watchlists-body pairList">
+      <div class="watchlists-body bge_pair_list">
         ${ items.map( this._renderPair ) } 
       </div>
     `
@@ -49,8 +49,8 @@ export class PairList extends Component {
 
   renderEmpty() {
     return html`
-      <div class="no-watchlists-body">
-        <div class="no-watchlist-message">
+      <div class="noWatchlistsBody">
+        <div class="noWatchlistsMessage">
           No pairs in this watchlist yet.
         </div>
         <${Button} onClick=${ this.props.onOpenAddModal }>

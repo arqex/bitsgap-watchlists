@@ -1,30 +1,26 @@
 .bge_watchlists {
-  contain: layout inline-size style;
-  container-name: watchlists;
   position: absolute;
 }
 
-@container watchlists (min-width: 0px) {
-  .no-watchlists-body {
-    padding: 20px;
-    text-align: center;
-    
-  }
+.bge_watchlists .noWatchlistsBody {
+  padding: 20px;
+  text-align: center;
   
-  .no-watchlist-message {
-    color: white;
-    margin-bottom: 20px;
-  }
+}
 
-  .theme-day .no-watchlist-message {
-    color: #333;
-  }
+.bge_watchlists .noWatchlistsMessage {
+  color: white;
+  margin-bottom: 20px;
+}
 
-  .watchlist-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 8px;
-    width: 100%;
-  }
+.theme-day .bge_watchlists .noWatchlistsMessage {
+  color: #333;
+}
+
+.bge_watchlists .exchangeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+  width: 100%;
 }

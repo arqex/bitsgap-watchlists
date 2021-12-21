@@ -3,7 +3,7 @@ import { html } from "../../vendor/preact.js";
 
 export function ExchangeFilters({exchanges, connected, selected, onSelect}) {
   return html`
-    <div class="exchange-filters">
+    <div class="exchangeFilters">
       ${ getOptions(exchanges, connected).map( exchange => (
         html`
           <${ExchangeFilter}
@@ -21,7 +21,7 @@ export function ExchangeFilters({exchanges, connected, selected, onSelect}) {
 
 export function ExchangeFilter({selected, onClick, children}) {
   const classes = mergeClasses(
-    'exchange-filter',
+    'exchangeFilter',
     selected && 'selected'
   );
 

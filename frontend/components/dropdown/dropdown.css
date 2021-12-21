@@ -1,6 +1,4 @@
 .bge_dropdown_panel {
-  contain: layout inline-size style;
-  container-name: dropdown_panel;
   background-color: #3c3750;
   border-radius: 4px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
@@ -41,76 +39,72 @@
   top: 6px; right: 8px;
 }
 
-
-@container dropdown_panel (min-width: 0px) {
-  .section {
-    padding: 4px 0;
-  }
-
-  .section--separator-top {
-    padding-top: 0;
-  }
-
-  .section--separator-bottom {
-    padding-bottom: 0;
-  }
-
-  .item {
-    background: transparent;
-    border: 0;
-    color: #ccc;
-    width: 100%;
-    padding: 8px;
-    font-size: .9em;
-    position: relative;
-    cursor: pointer;
-  }
-
-  .theme-day .item {
-    color: #333;
-  }
-
-  .item:hover {
-    background: #fff1;
-  }
-
-  .theme-day .item:hover {
-    background-color: #e5e0ef;
-  }
-
-  .item-remove {
-    position: absolute;
-    z-index: 1;
-    right: 4px;
-    top: 4px;
-    visibility: hidden;
-  }
-
-  .item:hover .item-remove {
-    visibility: visible;
-  }
-
-  .separator {
-    width: 100%;
-    height: 1px;
-    background-color: #fff1;
-  }
-
-  .theme-day .separator {
-    background-color: #d0d0d2;
-  }
-
-  .separator--top {
-    margin-bottom: 4px;
-  }
-
-  .separator--bottom {
-    margin-top: 4px;
-  }
+.bge_dropdown_panel .section {
+  padding: 4px 0;
 }
 
+.bge_dropdown_panel .section--separator-top {
+  padding-top: 0;
+}
 
-.bge_dropdown-button .button-text {
+.bge_dropdown_panel .section--separator-bottom {
+  padding-bottom: 0;
+}
+
+.bge_dropdown_panel .item {
+  background: transparent;
+  border: 0;
+  color: #ccc;
+  width: 100%;
+  padding: 8px;
+  font-size: .9em;
+  position: relative;
+  cursor: pointer;
+}
+
+.theme-day .bge_dropdown_panel .item {
+  color: #333;
+}
+
+.bge_dropdown_panel .item:hover {
+  background: #fff1;
+}
+
+.theme-day .bge_dropdown_panel .item:hover {
+  background-color: #e5e0ef;
+}
+
+.bge_dropdown_panel .itemRemove {
+  position: absolute;
+  z-index: 1;
+  right: 4px;
+  top: 4px;
+  visibility: hidden;
+}
+
+.bge_dropdown_panel .item:hover .itemRemove {
+  visibility: visible;
+}
+
+.bge_dropdown_panel .separator {
+  width: 100%;
+  height: 1px;
+  background-color: #fff1;
+}
+
+.theme-day .bge_dropdown_panel .separator {
+  background-color: #d0d0d2;
+}
+
+.bge_dropdown_panel .separator--top {
+  margin-bottom: 4px;
+}
+
+.bge_dropdown_panel .separator--bottom {
+  margin-top: 4px;
+}
+
+.bge_dropdown-button .buttonText {
   display: inline-block;
   white-space: nowrap;
   text-overflow: ellipsis;

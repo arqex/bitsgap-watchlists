@@ -28,7 +28,7 @@ export class InputGroup extends Component {
     const {error} = this.props;
     if( error ){
       return html`
-        <div class="error_message">
+        <div class="errorMessage">
           ${error}
         </div>
       `

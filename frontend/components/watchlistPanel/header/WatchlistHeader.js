@@ -19,7 +19,7 @@ export class WatchlistHeader extends Component {
 
     const {onCreate, onSelected, onRemoveList, selected, onAddPair} = this.props;
     return html`
-      <div class="watchlist-header">
+      <div class="exchangeHeader">
         <div class="watchlist-selector">
           <${WatchlistSelector}
             selected=${selected}

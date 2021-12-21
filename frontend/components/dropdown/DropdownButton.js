@@ -9,7 +9,7 @@ export class DropdownButton extends Component {
 
     return html`
       <button class=${classes} onClick=${this.props.onClick}>
-        <span class="button-text">
+        <span class="buttonText">
           ${this.props.children}
         </span>
         <i class="fas fa-caret-down"></i>
