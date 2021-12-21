@@ -168,6 +168,7 @@ export class WatchlistPanel extends Component {
     socketFeed.subscribe('balances', this._refresh);
     refreshBalances();
     this.trackContainer();
+    this.trackLayout();
   }
 
   componentWillUnmount() {
@@ -204,8 +205,9 @@ export class WatchlistPanel extends Component {
 
   observe = null
   trackLayout() {
+    const layout = document.querySelector('.trading-page');
     this.observer = new MutationObserver( this._refresh );
-    this.observer.observe(document.querySelector('.trading-page'), {attributes: true});
+    this.observer.observe( layout, {attributes: true});
   }
 
   getDimensions() {
