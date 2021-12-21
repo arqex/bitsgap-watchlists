@@ -84,6 +84,36 @@ const actionHandlers = {
     });
 
     return updatedPairs;
+  },
+
+  async getFavourites() {
+    return (await getValues(['fav'])).fav || [];
+  },
+
+  async addToFavourites(pair) {
+    let pairs = await this.getFavourites();
+
+    // check if the pair is already there
+    for( let p in pairs ){
+      if( areEquals( p, pair )){
+        // It is there, return the current list
+        return pairs;
+      }
+    }
+
+    let updatedList = [
+      ...pairs,
+      pair
+    ]
+    await setValues({ fav: updatedList });
+    return updatedList;
+  },
+
+  async removeFromFavourites(pair) {
+    let pairs = await this.getFavourites();
+    let updatedList = pairs.filter( p => !areEquals(p, pair) );
+    await setValues({ fav: updatedList });
+    return updatedList;
   }
 }
 

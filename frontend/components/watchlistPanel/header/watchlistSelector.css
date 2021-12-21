@@ -13,4 +13,14 @@
     top: 100%; left: 0;
     min-width: 200px;
   }
+
+  .item-title i {
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  i.fa-plus {
+    margin-left: 3px;
+    margin-right: 6px !important;
+  }
 }

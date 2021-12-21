@@ -30,7 +30,14 @@ export class WatchlistSelector extends Component {
               <div class="bge_dropdown_panel">
                 <${DropdownSection}>
                   <${DropdownItem} onClick=${this._openCreateModal}>
+                    <i class="fas fa-plus"></i>
                     Create new watchlist
+                  <//>
+                <//>
+                <${DropdownSection} topSeparator>
+                  <${DropdownItem} onClick=${ () => this._onSelect('favourites') }>
+                    <i class="far fa-star"></i>
+                    Favourites
                   <//>
                 <//>
                 <${DropdownSection} topSeparator>

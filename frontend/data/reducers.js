@@ -15,3 +15,7 @@ export function onListPairsLoaded(watchlistId, pairs){
   emitChange();
 }
 
+export function onFavouritesLoaded(pairs){
+  store.favourites = pairs;
+  emitChange();
+}

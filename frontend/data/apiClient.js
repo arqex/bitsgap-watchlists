@@ -23,6 +23,19 @@ export const apiClient = {
 
   async removePairFromWatchlist( watchlistId, pair ) {
     return await sendToBackend('removePairFromWatchlist', {watchlistId, pair} );
+  },
+
+  async loadFavourites() {
+    let results =  await sendToBackend('getFavourites', {});
+    return results?.length ? results : [];
+  },
+
+  async addToFavourites(pair) {
+    return await sendToBackend('addToFavourites', pair);
+  },
+
+  async removeFromFavourites(pair) {
+    return await sendToBackend('removeFromFavourites', pair);
   }
 }
 

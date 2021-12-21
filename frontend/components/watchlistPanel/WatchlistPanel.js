@@ -1,7 +1,7 @@
 import { ContainerTracker } from "../../bitsgapConnectors/containerTracker.js";
-import { addPairToWatchlist, createWatchlist, deleteWatchlist, removePairFromWatchlist } from "../../data/actions.js";
+import { addPairToWatchlist, addToFavourites, createWatchlist, deleteWatchlist, removeFromFavourites, removePairFromWatchlist } from "../../data/actions.js";
 import { getLastWatchlistId, saveLastWatchlistId } from "../../data/frontendStore.js";
-import { loadWatchlists } from "../../data/loaders.js";
+import { loadFavourites, loadWatchlists } from "../../data/loaders.js";
 import { refreshBalances, socketFeed } from "../../data/socketFeed.js";
 import { getPairSelector } from "../../scripts/pairSelector.js";
 import { html, Component } from "../../vendor/preact.js";
@@ -24,10 +24,11 @@ export class WatchlistPanel extends Component {
   }
 
   render() {
-    const {isLoading, watchlists} = loadWatchlists();
-    if( isLoading ) return 'Loading...';
+    const {isLoading: loadingWL , watchlists} = loadWatchlists();
+    const {isLoading: loadingFav, favourites} = loadFavourites();
+    if( loadingWL || loadingFav ) return 'Loading...';
 
-    const selected = this.getSelected(watchlists);
+    const selected = this.getSelected(watchlists, favourites);
     return html`
       <div class="trading-tables bge_watchlists" style=${this.getDimensions()}>
         <${WatchlistHeader}
@@ -42,7 +43,10 @@ export class WatchlistPanel extends Component {
           onCreateWatchlist=${ this._onCreateWatchlist }
           onSelectedPair=${ this._onSwitchPair }
           onDeletePair=${ this._onDeletePair }
-          onAddPair=${ this._openAddModal } />
+          onAddPair=${ this._onAddPair }
+          onOpenAddModal=${ this._openAddModal }
+          onRemoveList=${ this._onRemoveList }
+          favourites=${favourites} />
         <${PairSelectorModal}
           connectedExchanges=${ this.getConnectedExchanges() }
           open=${ this.state.modalOpen }
@@ -53,9 +57,12 @@ export class WatchlistPanel extends Component {
     `
   }
 
-  getSelected( watchlists ) {
+  getSelected( watchlists, favourites ) {
     if( watchlists.length === 0 ) return;
     const selectedWatchlistId = getLastWatchlistId();
+    if( selectedWatchlistId === 'favourites' ){
+      return {id: 'favourites', pairs: favourites, name: 'Favourites'};
+    }
     return watchlists.find( wl => wl.id === selectedWatchlistId ) || watchlists[0];
   }
 
@@ -101,7 +108,7 @@ export class WatchlistPanel extends Component {
 
   _onSelectPair =(pair) => {
     if( this.state.modalMode === 'add' ){
-      this._onAddPair(pair);
+      this._onAddPair(this.getSelectedWatchlistId(), pair);
     }
     else {
       this._closeModal();
@@ -109,8 +116,18 @@ export class WatchlistPanel extends Component {
     }
   }
 
-  _onAddPair = (pair) => {
-    addPairToWatchlist(this.getSelectedWatchlistId(), pair);
+  _onAddPair = (watchlistId, item) => {
+    const pair = {
+      exchange: item.exchange,
+      symbol: item.symbol
+    }
+    console.log('Adding pair', watchlistId, pair);
+    if( watchlistId === 'favourites' ){
+      addToFavourites(pair);
+    }
+    else {
+      addPairToWatchlist(watchlistId, pair);
+    }
   }
 
   _onSwitchPair = (pairData) => {
@@ -119,8 +136,13 @@ export class WatchlistPanel extends Component {
     this.setState(pairData);
   }
 
-  _onDeletePair = (pair) => {
-    removePairFromWatchlist(this.getSelectedWatchlistId(), pair);
+  _onDeletePair = (watchlistId, pair) => {
+    if( watchlistId === 'favourites' ){
+      removeFromFavourites(pair);
+    }
+    else {
+      removePairFromWatchlist(watchlistId, pair);
+    }
   }
 
   _openAddModal = () => {
@@ -153,6 +175,7 @@ export class WatchlistPanel extends Component {
     document.body.removeEventListener('keydown', this._onTyping );
     if( this.tracker ){
       this.tracker.removeChangeListener( this._refresh );
+      this.observer.disconnect();
     }
   }
   
@@ -174,9 +197,15 @@ export class WatchlistPanel extends Component {
 
   tracker = null
   trackContainer() {
-    this.tracker = new ContainerTracker('.trading-page__column');
+    this.tracker = new ContainerTracker('.trading-page__column_position_left');
     this.setState({dimensions: this.tracker.getDimensions() });
     this.tracker.addChangeListener( this._refresh );
+  }
+
+  observe = null
+  trackLayout() {
+    this.observer = new MutationObserver( this._refresh );
+    this.observer.observe(document.querySelector('.trading-page'), {attributes: true});
   }
 
   getDimensions() {

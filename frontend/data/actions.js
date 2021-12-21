@@ -1,5 +1,5 @@
 import { apiClient } from "./apiClient.js";
-import { onListPairsLoaded, onWatchlistsLoaded } from "./reducers.js";
+import { onListPairsLoaded, onWatchlistsLoaded, onFavouritesLoaded } from "./reducers.js";
 
 export async function createWatchlist(name) {
   let {id} = await apiClient.createWatchlist({name});
@@ -21,4 +21,14 @@ export async function addPairToWatchlist( watchlistId, pair ) {
 export async function removePairFromWatchlist( watchlistId, pair ){
   let pairs = await apiClient.removePairFromWatchlist( watchlistId, pair );
   onListPairsLoaded( watchlistId, pairs );
+}
+
+export async function addToFavourites(pair) {
+  let pairs = await apiClient.addToFavourites( pair );
+  onFavouritesLoaded(pairs);
+}
+
+export async function removeFromFavourites(pair) {
+  let pairs = await apiClient.removeFromFavourites( pair );
+  onFavouritesLoaded(pairs);
 }

@@ -6,10 +6,15 @@ import {socketFeed, refreshPrice, refreshPrice1dAgo} from '../../../data/socketF
 export class PairItem extends Component {
   render() {
     const {item} = this.props;
+    const classes = mergeClasses(
+      'pairItem',
+      this.props.watchlistId !== 'favourites' && 'withFavouritesControl'
+    )
   
     return html`
-      <div class="pairItem" onClick=${ this._onSelected }>
+      <div class=${classes} onClick=${ this._onSelected }>
         <div class="pairItemSymbol">
+          ${ this.renderFavControls() }
           <span class="pairItemExchange">
             <${ExchangeImage} exchange=${item.exchange} />
           </span>
@@ -23,6 +28,20 @@ export class PairItem extends Component {
             <i class="fas fa-times"></i>
           <//>
         </div>
+      </div>
+    `
+  }
+
+  renderFavControls() {
+    if( this.props.watchlistId === 'favourites' ) return;
+    const starClasses = this.props.isFavourite ?
+      "fas fa-star active" :
+      "far fa-star inactive"
+    ;
+
+    return html`
+      <div class="pairItemFavourite" onClick=${ this._onFavouriteToggle }>
+        <i class=${starClasses}></i>
       </div>
     `
   }
@@ -64,7 +83,7 @@ export class PairItem extends Component {
   }
 
   _onRemove = () => {
-    this.props.onRemove( this.props.item );
+    this.props.onRemove( this.props.watchlistId, this.props.item );
   }
 
   getCurrentPrice() {
@@ -108,6 +127,19 @@ export class PairItem extends Component {
 
     if( !price || !prevPrice ){
       setTimeout( () => this.checkPriceAvailability(exchange, symbol), 1000 );
+    }
+  }
+
+  _onFavouriteToggle = (e) => {
+    console.log('Toggling favourite');
+    e.preventDefault();
+
+    const {isFavourite, item} = this.props;
+    if( isFavourite ){
+      this.props.onRemove('favourites', item)
+    }
+    else {
+      this.props.onAdd('favourites', item);
     }
   }
 }

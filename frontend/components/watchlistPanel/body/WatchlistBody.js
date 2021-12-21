@@ -27,13 +27,15 @@ export class WatchlistBody extends Component {
   }
 
   renderWatchlist( watchlistId ) {
-    const {onAddPair, onDeletePair, onSelectedPair} = this.props;
+    const {onAddPair, onDeletePair, onSelectedPair, favourites, onOpenAddModal} = this.props;
     return html`
       <${PairList}
+        onOpenAddModal=${onOpenAddModal}
         onAddPair=${onAddPair}
         onRemovePair=${onDeletePair}
         onSelectPair=${onSelectedPair}
-        watchlistId=${watchlistId} />
+        watchlistId=${watchlistId}
+        favourites=${favourites}/>
     `
   }
 }

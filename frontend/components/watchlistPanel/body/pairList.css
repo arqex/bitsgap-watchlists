@@ -69,4 +69,27 @@
     display: inline-block;
     margin-right: 4px;
   }
+
+  .withFavouritesControl:hover .pairItemExchange {
+    display: none;
+  }
+
+  .pairItemFavourite {
+    display: none;
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+  }
+
+  .pairItem:hover .pairItemFavourite {
+    display: inline-block;
+  }
+
+  .fa-star.active {
+    color: #ffca00
+  }
+
+  .fa-star.inactive {
+    color: #999;
+  }
 }

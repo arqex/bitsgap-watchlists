@@ -4,6 +4,7 @@
   loadStyles(chrome.runtime.getURL('frontend/bitsgap-extension.css'));
   loadStyles('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css');
   loadStyles('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css');
+  loadStyles('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/regular.min.css');
 })();
 
 function loadUI() {

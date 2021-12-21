@@ -1,5 +1,5 @@
 import { apiClient } from "./apiClient.js";
-import { onListPairsLoaded, onWatchlistsLoaded } from "./reducers.js";
+import { onFavouritesLoaded, onListPairsLoaded, onWatchlistsLoaded } from "./reducers.js";
 import { store } from "./store.js";
 
 let loadWatchlistPromise = null;
@@ -39,4 +39,23 @@ export function loadWatchlistPairs( watchlistId ){
   }
 
   return {isLoading: true, pairs: null};
+}
+
+
+let loadFavouritesPromise = null;
+export function loadFavourites(){
+  let favourites = store.favourites;
+  if( favourites ){
+    return {isLoading: false, favourites}
+  }
+
+  if( !loadFavouritesPromise ){
+    loadFavouritesPromise = apiClient.loadFavourites()
+      .then( favourites => {
+        loadFavouritesPromise = null;
+        onFavouritesLoaded(favourites);
+      });
+  }
+
+  return {isLoading: true, favourites: null};
 }
