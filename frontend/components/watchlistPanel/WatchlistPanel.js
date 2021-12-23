@@ -176,7 +176,7 @@ export class WatchlistPanel extends Component {
     document.body.removeEventListener('keydown', this._onTyping );
     if( this.tracker ){
       this.tracker.removeChangeListener( this._refresh );
-      this.observer.disconnect();
+      this.observer?.disconnect();
     }
   }
   
@@ -206,8 +206,10 @@ export class WatchlistPanel extends Component {
   observe = null
   trackLayout() {
     const layout = document.querySelector('.trading-page');
-    this.observer = new MutationObserver( this._refresh );
-    this.observer.observe( layout, {attributes: true});
+    if( layout ){
+      this.observer = new MutationObserver( this._refresh );
+      this.observer.observe( layout, {attributes: true});
+    }
   }
 
   getDimensions() {

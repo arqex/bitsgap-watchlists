@@ -21,10 +21,26 @@
 .bge_pair_selector input {
   display: block;
   background-color: #1d1a28;
-  border: 2px solid #0001;
+  border: 2px solid #fff1;
   padding: 10px 10px 10px 32px;
   color: #fff;
   width: 100%;
+}
+
+.theme-day .bge_pair_selector input {
+  background-color: #eee;
+  border: 2px solid #0001;
+  color: #111;
+}
+
+.bge_pair_selector input:focus {
+  outline: none;
+  border: 2px solid #fff3;
+}
+
+.theme-day .bge_pair_selector input:focus {
+  outline: none;
+  border: 2px solid #0003;
 }
 
 .bge_pair_selector .resultsWrapper {

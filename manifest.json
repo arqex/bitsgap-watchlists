@@ -1,17 +1,19 @@
 {
-  "name": "Bitsgap watchlist",
+  "name": "Bitsgap watchlists",
   "action": {},
   "manifest_version": 3,
-  "version": "0.1",
-  "description": "Add some more functionality for bitsgap",
+  "version": "1.0",
+  "description": "Allows to creae multiple watchlists in the bitsgap application. Navigate the markets and your portfolio x100 easier.",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
   "permissions": [
     "activeTab",
     "scripting",
     "storage"
   ],
-  "background": {
-    "service_worker": "background.js"
-  },
   "content_scripts": [
     {
       "matches": ["https://app.bitsgap.com/*"],

@@ -30,13 +30,19 @@ class Root extends Component {
     // listening to popstate won't work with bitsgap
     // We are going to observe changes in the content of the page to
     // avoid polling to check when the route has changed
-    let container = document.querySelector('.logged-in-layout__content');   
-    let observer = new MutationObserver( () => {
-      if( window.location.pathname !== this.state.currentRoute ){
-        this.onNavigation();
-      }
-    });
-    observer.observe( container, {childList: true} );
+    let container = document
+      .querySelector('.page-header')
+      .parentElement.parentElement.children[1]
+    ;
+
+    if( container ){
+      let observer = new MutationObserver( () => {
+        if( window.location.pathname !== this.state.currentRoute ){
+          this.onNavigation();
+        }
+      });
+      observer.observe( container, {childList: true} );
+    }
   }
 
   previousRoute = '';
