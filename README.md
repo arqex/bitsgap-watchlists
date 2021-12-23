@@ -12,12 +12,12 @@ The watchlists in this extension has a strong TradeView flavor, that includes:
 * Showing live pair prices and 24h change within every list item.
 * Quick markets search by just start typing the pair's symbol.
 
-# Overview
+## Overview
 
 You can see the extension working in this video:
 https://www.youtube.com/watch?v=MbhwTfV7rI4
 
-# Install
+## Install
 
 I'm trying to get this extension available through the Chrome Extension Store, but until it gets accepted, you can download the zip file fron the "Code" green button here at github.
 
@@ -31,5 +31,5 @@ The steps in the tutorial are:
 * Enable the plugin.
 * Go to the Bitsgap site to see it working.
 
-# License
+## License
 This open-source plugin is given as is, under a [MIT license](LICENSE).
