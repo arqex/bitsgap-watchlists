@@ -3,15 +3,13 @@
   "action": {},
   "manifest_version": 3,
   "version": "1.0",
-  "description": "Allows to creae multiple watchlists in the bitsgap application. Navigate the markets and your portfolio x100 easier.",
+  "description": "Allows to create multiple watchlists in the bitsgap application. Navigate the markets and your portfolio x100 easier.",
   "icons": {
     "16": "icon.png",
     "48": "icon.png",
     "128": "icon.png"
   },
   "permissions": [
-    "activeTab",
-    "scripting",
     "storage"
   ],
   "content_scripts": [
